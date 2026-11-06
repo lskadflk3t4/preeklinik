@@ -129,7 +129,7 @@ function tagsHTML(p, s){
 function rxnHTML(p, i, opt){ opt = opt || {}; const s = p.st[i];
   return `<span class="rxn"><span class="m">${esc(mol(s[0]))}</span><span class="ar">→</span><span class="m">${esc(mol(s[1]))}</span></span>`
     + (opt.noEnz ? '' : `<span class="e">${esc(enz(s[2]))}</span>`)
-    + (s[3] && !opt.noSide ? `<span class="side">${esc(T(s[3]))}</span>` : '')
+    + (s[3] && !opt.noSide ? `${sideHTML(s[3])}` : '')
     + (opt.tags ? `<span class="tags">${tagsHTML(p, s)}</span>` : '');
 }
 /* Pathway map; B = blanks {key:{kind,opts,val,state,ans}} */
@@ -146,13 +146,13 @@ function mapHTML(p, B){ B = B || {};
   let h = `<ol class="map" aria-label="${esc(T(p.n))}">`;
   p.st.forEach((s, i) => {
     if (i === 0 || s[0] !== p.st[i-1][1]){ if (i > 0) h += `<li class="branch">⤷ ${esc(u('newBranch'))}</li>`; h += node('s'+i, s[0]); }
-    h += `<li class="arrow"><span class="stem" aria-hidden="true"></span><div class="ab">`
+    h += `<li class="arrow ${locCls(stepLoc(p, s))}${s[5] && s[5].indexOf('i') >= 0 ? ' irrv' : ''}"><span class="stem" aria-hidden="true"></span><div class="ab">`
       + (B['e'+i] ? blankSel('e'+i, B['e'+i]) : `<span class="e">${esc(enz(s[2]))}</span>`)
-      + (s[3] ? `<span class="side">${esc(T(s[3]))}</span>` : '') + `<span class="tags">${tagsHTML(p, s)}</span></div></li>`;
+      + (s[3] ? `${sideHTML(s[3])}` : '') + `<span class="tags">${tagsHTML(p, s)}</span></div></li>`;
     h += node('p'+i, s[1]);
   });
   if (p.cyc) h += `<li class="loop">↺ ${esc(u('backToStart'))}</li>`;
-  return h + `</ol>`;
+  return h + `</ol>` + legendHTML(p);
 }
 let INFO_OPEN = null;
 function infoHTML(p){ if (INFO_OPEN === null) INFO_OPEN = typeof window !== 'undefined' && window.matchMedia ? window.matchMedia('(min-width: 700px)').matches : true;
@@ -164,7 +164,7 @@ function makeOrder(items, fixed){ // items: [{ans, d}] in correct order
   return {items:its, correct:its.map(i => i.ans), pool:shuffle(its.map(i => i.uid)), seq:[], checked:false, res:[], fixed:fixed || null, msg:null};
 }
 function descHTML(d){
-  if (d.t === 'step') return rxnHTML(PW[d.p], d.i, {noEnz:false});
+  if (d.t === 'step') return rxnBlock(PW[d.p], d.i);
   if (d.t === 'enz') return `<span class="e">${esc(enz(d.id))}</span>`;
   if (d.t === 'mol') return `<span class="m">${esc(mol(d.id))}</span>`;
   return `<span class="txt">${esc(T(d.x))}</span>`;
@@ -175,8 +175,10 @@ function orderHTML(o, ns){
   let h = `<div class="order"><div class="col seqcol"><div class="col-h">${u('seq')}</div><ol class="seqlist">`;
   if (o.fixed) h += `<li><div class="oitem fixed"><span class="onum">1</span>${descHTML(o.fixed)}<span class="chip muted">${u('fixedStart')}</span></div></li>`;
   o.seq.forEach((uid, k) => { const cls = o.checked ? (o.res[k] ? 'ok' : 'no') : '';
+    if (k > 0 || o.fixed) h += seqLink(o, k, get);
     h += `<li><button type="button" class="oitem ${cls}" data-act="ounpick" data-ns="${ns}" data-uid="${uid}"${o.checked ? ' disabled' : ''}><span class="onum">${k+1+off}</span>${descHTML(get(uid).d)}</button></li>`; });
-  if (!o.seq.length && !o.fixed) h += `<li class="empty">…</li>`;
+  if (!o.checked){ const left = o.correct.length - o.seq.length;
+    for (let g = 0; g < Math.min(left, 3); g++) h += `<li class="ghost"><span class="onum">${o.seq.length + g + 1 + off}</span>${g === 2 && left > 3 ? esc(u('slotLeft', {n:left - 2})) : '…'}</li>`; }
   h += `</ol></div><div class="col poolcol"><div class="col-h">${u('pool')}</div><div class="poollist">`;
   o.pool.forEach(uid => { h += `<button type="button" class="oitem" data-act="opick" data-ns="${ns}" data-uid="${uid}">${descHTML(get(uid).d)}</button>`; });
   if (!o.pool.length) h += `<div class="empty">✓</div>`;
@@ -191,6 +193,15 @@ function orderHTML(o, ns){
     else { h += `<div class="fb no"><strong>${u('nCorrect', {n, t:o.correct.length})}</strong><ol class="solution" start="${1+off}">`;
       o.items.forEach(it => { h += `<li>${descHTML(it.d)}</li>`; }); h += `</ol></div>`; } }
   return h;
+}
+function seqLink(o, k, get){
+  const prevD = k === 0 ? o.fixed : get(o.seq[k - 1]).d, curD = get(o.seq[k]).d;
+  if (!o.checked || !prevD || prevD.t !== curD.t || (curD.t !== 'step' && curD.t !== 'mol')) return `<li class="flow" aria-hidden="true"></li>`;
+  if (curD.t === 'step'){ const pa = PW[prevD.p].st[prevD.i], cu = PW[curD.p].st[curD.i];
+    if (pa[1] === cu[0]) return `<li class="link ok">✓ ${esc(u('linkOk', {m:mol(cu[0])}))}</li>`;
+    if (o.res[k] && (k === 0 || o.res[k - 1])) return `<li class="link br">⤷ ${esc(u('linkBranch'))}</li>`;
+    return `<li class="link no">✗ ${esc(u('linkNo', {a:mol(pa[1]), b:mol(cu[0])}))}</li>`; }
+  return o.res[k] ? `<li class="link ok">↓</li>` : `<li class="link no">✗</li>`;
 }
 function lastLabel(d){ if (d.t === 'step'){ const s = PW[d.p].st[d.i]; return enz(s[2]); } if (d.t === 'enz') return enz(d.id); if (d.t === 'mol') return mol(d.id); return T(d.x); }
 function orderState(ns){ return ns === 'd1' ? S.d1.o : ns === 'd5' ? S.d5.ord.o : S[ns].o; }
@@ -225,7 +236,7 @@ function renderD1(){
   h += infoHTML(p);
   h += `<div class="actions"><button type="button" class="btn" data-act="d1map">${s.showMap ? u('hideMap') : u('showMap')}</button><button type="button" class="btn" data-act="d1new">${u('reshuffle')}</button></div>`;
   if (s.showMap) h += `<div class="card mapcard"><p class="note">${u('studyNote')}</p>${mapHTML(p)}</div>`;
-  h += `<div class="card">${orderHTML(s.o, 'd1')}</div>`;
+  h += `<div class="card">${orderHTML(s.o, 'd1')}${s.o.items[0] && s.o.items[0].d.t === 'step' ? legendHTML(p) : ''}</div>`;
   if (s.o.checked && !s.showMap) h += `<div class="card mapcard">${mapHTML(p)}</div>`;
   return h;
 }
