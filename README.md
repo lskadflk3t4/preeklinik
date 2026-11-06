@@ -7,11 +7,12 @@ Interactive metabolism, biochemistry and physiology drills in **English, French 
 - Pathway reconstruction, "what happens next", organ metabolism, hormone response, metabolic switching, enzyme detective, missing molecule, clinical cases plus a disease matcher, and energy (ATP) calculations
 - 30 clinical cases and 33 inherited metabolic disorders in the disease matcher
 
-**Biochemistry (4 drill types)**
+**Biochemistry (5 drill types)**
 - B1 Structure builder: build nucleotides, lipids, disaccharides and polysaccharides from their parts; sort and recognise the 20 amino acids
 - B2 Enzyme kinetics: Michaelis–Menten, Lineweaver–Burk and allosteric graphs, inhibition types, rate calculations, enzyme drugs
 - B3 Buffers & pH: Henderson–Hasselbalch, pI, titration curves, net charge of amino acids and peptides, drug ionisation
 - B4 Protein structure: structural levels and bonds, folding and processing, collagen, haemoglobin, misfolding diseases
+- B5 Molecule ID: 111 structural formulas (20 amino acids, glycolysis and sugars, Krebs cycle, lipids and ketone bodies, urea cycle and nitrogen compounds, nucleobases and nucleotides, coenzymes, neurotransmitters and hormones). Name ↔ structure, pathway role, net charge at pH 7.4, 29 functional groups highlighted on the structure, 56 "what changed?" reaction pairs, and an **Atlas** to browse every molecule with its formula, groups and role. Skeletal or full C–H drawing.
 
 **Physiology (4 drill types)**
 - P1 What happens if…: predict ↑/↓/– for 19 scenarios (haemorrhage, standing up, diuretics, altitude, SIADH, DKA…) and order 10 reflex/cascade sequences
@@ -96,6 +97,8 @@ Edit the files and push to GitHub. Before you push, change the version string at
 | `app.js` | Metabolism drills, language switching, scoring |
 | `bx.js` | Engine for the biochemistry and physiology drills |
 | `bdata1.js`–`bdata3.js` | Biochemistry drills (B1–B4) |
+| `mdata.js` | Molecule structures for B5 (2D coordinates, stereo, functional groups, names) – generated with RDKit, do not edit by hand |
+| `bdata4.js` | B5 Molecule ID: structure drawing, questions and atlas |
 | `pdata1.js`, `pdata2.js` | Physiology drills (P1–P4) |
 | `ui.js` | Study layout: dashboard, sidebar, bottom bar, settings, shortcuts |
 | `review.js` | Mistakes bank and spaced review |

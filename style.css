@@ -538,3 +538,44 @@ body{padding-bottom:var(--navh)}
 .ecell .tk{font-size:.68rem}
 .ecell .edot{color:var(--line)}
 .ecell:not(.on){opacity:.65}
+
+/* ===== B5 Molecule ID: structural formulas ===== */
+:root{ --el-o:#c0392b; --el-n:#1f5fbf; --el-s:#9a6b00; --el-p:#b5530b; --el-i:#7b3fa0; --hl:rgba(255,190,0,.42) }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --el-o:#ff8f7d; --el-n:#8fb6ff; --el-s:#efc357; --el-p:#ffab6b; --el-i:#d2a8ff; --hl:rgba(255,200,60,.33) } }
+:root[data-theme="dark"]{ --el-o:#ff8f7d; --el-n:#8fb6ff; --el-s:#efc357; --el-p:#ffab6b; --el-i:#d2a8ff; --hl:rgba(255,200,60,.33) }
+.molsvg{display:block; max-width:100%; height:auto; margin:0 auto; overflow:visible}
+.molsvg .mb{stroke:var(--ink); stroke-width:1.6; stroke-linecap:round}
+.molsvg .mw{fill:var(--ink)}
+.molsvg .mh{stroke-width:1.3}
+.molsvg .mhl{stroke:var(--hl); fill:var(--hl); stroke-width:11; stroke-linecap:round}
+.molsvg .mt{fill:var(--ink); font-family:var(--font-body); font-weight:700}
+.molsvg .mps{fill:var(--enz); font-style:italic}
+.molsvg .mq{fill:var(--ink); font-family:var(--font-body); font-weight:700}
+.molsvg .el-o{fill:var(--el-o)} .molsvg .el-n{fill:var(--el-n)} .molsvg .el-s{fill:var(--el-s)} .molsvg .el-p{fill:var(--el-p)} .molsvg .el-i{fill:var(--el-i)}
+.fig .molsvg{max-height:340px; width:auto}
+.rxfig{display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap}
+.rxfig .rxm{flex:0 1 auto; min-width:0}
+.rxfig .rxm .molsvg{max-height:220px}
+.rxarrow{font-size:2rem; color:var(--accent); font-weight:700; line-height:1}
+.opts.figs{grid-template-columns:repeat(2, minmax(0, 1fr))}
+.opt.figopt{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; padding:10px; min-height:120px; text-align:center}
+.opt.figopt .figw{display:flex; align-items:center; justify-content:center; width:100%}
+.opt.figopt .molsvg{max-height:170px; width:auto}
+.opt.figopt.ok .molsvg .mb, .opt.figopt.no .molsvg .mb{stroke:currentColor}
+.optname{font-size:.9rem}
+.molbar{gap:8px 12px}
+.molgrid{display:grid; grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); gap:8px; margin-top:12px}
+.molcell{display:flex; flex-direction:column; align-items:center; gap:6px; padding:10px 8px; border:1px solid var(--line); background:var(--surface); border-radius:var(--r); cursor:pointer; text-align:center}
+.molcell:hover, .molcell.on{border-color:var(--accent)}
+.molcell .molthumb{display:flex; align-items:center; justify-content:center; height:110px; width:100%}
+.molcell .molthumb .molsvg{max-height:110px; width:auto}
+.molcell .molname{font-size:.85rem; font-weight:700; line-height:1.25}
+.molcard{margin:4px 0 12px}
+.molhead{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:8px}
+.molfig{overflow-x:auto}
+.molfig .molsvg{max-height:none; max-width:100%}
+.molfacts{display:flex; flex-wrap:wrap; gap:6px 18px; font-size:.92rem}
+.mollab{margin:12px 0 6px; font-size:.85rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted)}
+.libchip.on{background:var(--accent); color:var(--accent-ink); border-color:var(--accent)}
+.libchip.on span{color:inherit}
+@media (max-width:480px){ .opts.figs{grid-template-columns:repeat(2, minmax(0, 1fr))} .opt.figopt{min-height:100px; padding:6px} .opt.figopt .molsvg{max-height:130px} .molgrid{grid-template-columns:repeat(2, minmax(0, 1fr))} .rxarrow{transform:rotate(90deg)} .rxfig{flex-direction:column} }

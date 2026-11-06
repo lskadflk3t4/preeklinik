@@ -73,7 +73,7 @@ function renderBX(id){
   let h = '';
   if (tk.length > 1) h += `<div class="controls"><label class="field"><span>${u('topic')}</span><select data-chg="bxtopic" data-id="${id}" id="sel-${id}"><option value="any">${esc(u('allTopics'))}</option>`
     + tk.map(k => `<option value="${k}"${k === s.topic ? ' selected' : ''}>${esc(T(d.topics[k]))}</option>`).join('') + `</select></label></div>`;
-  h += `<div class="card qcard bx"><div class="qmeta">${esc(T(d.topics[it.t] || ''))} · ${u(it.fig ? 'kgraph' : KIND[it.k])}</div>`;
+  h += `<div class="card qcard bx"><div class="qmeta">${esc(T(d.topics[it.t] || ''))} · ${u(it.kl || (it.fig ? 'kgraph' : KIND[it.k]))}</div>`;
   if (it.q) h += `<h3 class="q">${esc(T(it.q))}</h3>`;
   if (it.fig) h += `<figure class="fig">${typeof it.fig === 'function' ? it.fig() : it.fig}</figure>`;
   h += BXK[it.k](id, s, it) + `</div>`;
@@ -90,9 +90,10 @@ function chipRow(id, r, opts, cur, done, okIdx){
 }
 const PRED = [['u', '↑'], ['d', '↓'], ['n', '–']];
 const BXK = {
-  mcq(id, s, it){ let h = `<div class="opts${it.o.length === 2 ? ' two' : ''}">`;
+  mcq(id, s, it){ let h = `<div class="opts${it.figo ? ' figs' : it.o.length === 2 ? ' two' : ''}">`;
     s.perm.forEach((oi, pos) => { let cls = ''; if (s.chosen != null){ if (oi === 0) cls = 'ok'; else if (pos === s.chosen) cls = 'no'; else cls = 'dim'; }
-      h += `<button type="button" class="opt ${cls}" data-act="bxans" data-id="${id}" data-k="${pos}"${s.chosen != null ? ' disabled' : ''}>${esc(T(it.o[oi]))}</button>`; });
+      const body = it.figo ? `<span class="figw">${it.figo[oi]}</span>` + (s.chosen != null ? `<span class="optname">${esc(T(it.o[oi]))}</span>` : `<span class="sr">${u('molOpt')} ${pos + 1}</span>`) : esc(T(it.o[oi]));
+      h += `<button type="button" class="opt${it.figo ? ' figopt' : ''} ${cls}" data-act="bxans" data-id="${id}" data-k="${pos}"${s.chosen != null ? ' disabled' : ''}>${body}</button>`; });
     h += `</div>`;
     if (s.chosen != null){ const ok = s.perm[s.chosen] === 0; h += `<div class="fb ${ok ? 'ok' : 'no'}"><strong>${ok ? u('correct') : u('wrong')}</strong>${bxExpl(it)}</div>` + bxNext(id); }
     return h; },
