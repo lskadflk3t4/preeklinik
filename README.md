@@ -21,6 +21,10 @@ Interactive metabolism, biochemistry and physiology drills in **English, French 
 
 Most questions are generated with fresh numbers and graphs each time.
 
+**Study tools**
+- Mistakes bank and spaced review: every wrong answer is saved exactly as you saw it and comes back after 1, 3, 7, 14 and 30 days (a wrong answer restarts it). Open it from **Review** in the bottom bar or sidebar. The bank syncs with your scores.
+- Today's goal, day streak, continue / random / weakest drill, sidebar on computers, bottom bar on phones, keyboard shortcuts, text size and theme settings.
+
 No build step, no server code, no dependencies: it is plain HTML, CSS and JavaScript.
 
 ---
@@ -93,6 +97,8 @@ Edit the files and push to GitHub. Before you push, change the version string at
 | `bx.js` | Engine for the biochemistry and physiology drills |
 | `bdata1.js`–`bdata3.js` | Biochemistry drills (B1–B4) |
 | `pdata1.js`, `pdata2.js` | Physiology drills (P1–P4) |
+| `ui.js` | Study layout: dashboard, sidebar, bottom bar, settings, shortcuts |
+| `review.js` | Mistakes bank and spaced review |
 | `sync.js` | GitHub Gist sync, backup file, install button, update notice |
 | `icon-*.png`, `apple-touch-icon.png`, `favicon.svg` | App icons (normal + maskable for Android) |
 

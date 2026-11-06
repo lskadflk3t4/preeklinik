@@ -1,7 +1,7 @@
 /* Preclinical Drills service worker – offline-first. VERSION changes on every build. */
-const VERSION = 'md-2026-11-06-93706e07';
+const VERSION = 'md-2026-11-06-272ec033';
 const FONTS = 'md-fonts';
-const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./style.css?v=2026-11-06-93706e07", "./data1.js?v=2026-11-06-93706e07", "./data2.js?v=2026-11-06-93706e07", "./data3.js?v=2026-11-06-93706e07", "./data4.js?v=2026-11-06-93706e07", "./app.js?v=2026-11-06-93706e07", "./bx.js?v=2026-11-06-93706e07", "./bdata1.js?v=2026-11-06-93706e07", "./bdata2.js?v=2026-11-06-93706e07", "./bdata3.js?v=2026-11-06-93706e07", "./pdata1.js?v=2026-11-06-93706e07", "./pdata2.js?v=2026-11-06-93706e07", "./sync.js?v=2026-11-06-93706e07", "./apple-touch-icon.png", "./favicon.svg", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png"];
+const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./style.css?v=2026-11-06-272ec033", "./data1.js?v=2026-11-06-272ec033", "./data2.js?v=2026-11-06-272ec033", "./data3.js?v=2026-11-06-272ec033", "./data4.js?v=2026-11-06-272ec033", "./app.js?v=2026-11-06-272ec033", "./bx.js?v=2026-11-06-272ec033", "./bdata1.js?v=2026-11-06-272ec033", "./bdata2.js?v=2026-11-06-272ec033", "./bdata3.js?v=2026-11-06-272ec033", "./pdata1.js?v=2026-11-06-272ec033", "./pdata2.js?v=2026-11-06-272ec033", "./ui.js?v=2026-11-06-272ec033", "./review.js?v=2026-11-06-272ec033", "./sync.js?v=2026-11-06-272ec033", "./apple-touch-icon.png", "./favicon.svg", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png"];
 self.addEventListener('install', e => { e.waitUntil(caches.open(VERSION).then(c => c.addAll(ASSETS.map(a => new Request(a, {cache:'reload'}))))); });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== VERSION && k !== FONTS).map(k => caches.delete(k)))).then(() => self.clients.claim()));

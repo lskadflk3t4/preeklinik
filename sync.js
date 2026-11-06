@@ -41,7 +41,7 @@ async function gh(path, opts){
   if (!r.ok) throw new Error('HTTP ' + r.status);
   return r.status === 204 ? null : r.json();
 }
-function payload(){ return JSON.stringify({app:'metabolism-drills', v:1, resetAt:PROG.resetAt, devices:PROG.devices}, null, 1); }
+function payload(){ return JSON.stringify({app:'metabolism-drills', v:1, resetAt:PROG.resetAt, devices:PROG.devices, rv:PROG.rv}, null, 1); }
 async function findOrCreateGist(){
   for (let page = 1; page <= 5; page++){
     const list = await gh('/gists?per_page=100&page=' + page);
