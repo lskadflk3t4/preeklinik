@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Preclinical Drills</title>
+<meta name="description" content="Offline metabolism, biochemistry and physiology drills in English, French and German.">
+<meta name="theme-color" content="#0d6e86" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e1519" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=2026-11-06-93706e07">
+</head>
+<body>
+<header id="hdr"></header>
+<main id="main"><p id="boot" style="padding:24px">Loading…</p></main>
+<noscript>This app needs JavaScript.</noscript>
+<script>
+/* Boot watchdog: if the app has not started after a few seconds (half-finished upload, stale cache), offer a repair button. */
+(function(){
+  var errs=[];
+  addEventListener('error',function(e){var t=e.target;errs.push(t&&t.src?('Could not load '+t.src.split('/').pop().split('?')[0]):(e.message||'error'));},true);
+  window.__repair=function(){
+    var done=function(){location.reload();};
+    var p=[];
+    if('serviceWorker' in navigator) p.push(navigator.serviceWorker.getRegistrations().then(function(r){return Promise.all(r.map(function(x){return x.unregister();}));}));
+    if(window.caches) p.push(caches.keys().then(function(k){return Promise.all(k.map(function(x){return caches.delete(x);}));}));
+    [].forEach.call(document.querySelectorAll('script[src],link[rel=stylesheet]'),function(el){var u=el.src||el.href;if(u.indexOf(location.origin)===0&&window.fetch)p.push(fetch(u,{cache:'reload'}).catch(function(){}));});
+    Promise.all(p).then(done,done);
+  };
+  setTimeout(function(){
+    if(!document.getElementById('boot')) return;
+    var m=document.getElementById('main');
+    m.innerHTML='<div style="padding:24px;font-family:sans-serif;line-height:1.5"><h2>The app did not start</h2><p>This usually means the files on GitHub are only partly uploaded, or an old version is stuck in the cache.</p><p><button onclick="__repair()" style="font-size:1.1em;padding:10px 18px">Clear cache and reload</button></p><p style="font-size:.85em;opacity:.7">Your progress and sync settings are kept.</p><pre style="white-space:pre-wrap;font-size:.8em;opacity:.7"></pre></div>';
+    m.querySelector('pre').textContent=errs.slice(0,6).join('\n');
+  },6000);
+})();
+</script>
+<script src="data1.js?v=2026-11-06-93706e07"></script>
+<script src="data2.js?v=2026-11-06-93706e07"></script>
+<script src="data3.js?v=2026-11-06-93706e07"></script>
+<script src="data4.js?v=2026-11-06-93706e07"></script>
+<script src="app.js?v=2026-11-06-93706e07"></script>
+<script src="bx.js?v=2026-11-06-93706e07"></script>
+<script src="bdata1.js?v=2026-11-06-93706e07"></script>
+<script src="bdata2.js?v=2026-11-06-93706e07"></script>
+<script src="bdata3.js?v=2026-11-06-93706e07"></script>
+<script src="pdata1.js?v=2026-11-06-93706e07"></script>
+<script src="pdata2.js?v=2026-11-06-93706e07"></script>
+<script src="sync.js?v=2026-11-06-93706e07"></script>
+</body>
+</html>
