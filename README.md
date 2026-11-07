@@ -2,10 +2,12 @@
 
 Interactive metabolism, biochemistry and physiology drills in **English, French and German**. The app works completely offline once installed. It can sync your progress between devices through a private GitHub Gist.
 
-**Metabolism (9 drill types)**
+**Metabolism (11 drill types)**
 - 47 metabolic pathways (glycolysis → sphingolipid degradation)
 - Pathway reconstruction, "what happens next", organ metabolism, hormone response, metabolic switching, enzyme detective, missing molecule, clinical cases plus a disease matcher, and energy (ATP) calculations
 - 30 clinical cases and 33 inherited metabolic disorders in the disease matcher
+- 10 Pathway diagrams: every pathway drawn as a real diagram (straight, branched or cycle), coloured by compartment. Study mode (tap a step for a plain-language explanation) or fill the empty molecule/enzyme boxes from a word bank
+- 11 Organ maps: 9 inter-organ diagrams (fed state, overnight fast, starvation, Cori cycle, glucose–alanine cycle, nitrogen/ammonia, lipoproteins, ketone bodies, heme → bilirubin) with gap-fill exercises, plus a tappable body map with 40 "which organs?" questions
 
 **Biochemistry (5 drill types)**
 - B1 Structure builder: build nucleotides, lipids, disaccharides and polysaccharides from their parts; sort and recognise the 20 amino acids
@@ -100,9 +102,11 @@ Edit the files and push to GitHub. Before you push, change the version string at
 | `mdata.js` | Molecule structures for B5 (2D coordinates, stereo, functional groups, names) – generated with RDKit, do not edit by hand |
 | `bdata4.js` | B5 Molecule ID: structure drawing, questions and atlas |
 | `pdata1.js`, `pdata2.js` | Physiology drills (P1–P4) |
+| `vis.js` | Colour coding, compartment legend and "In simple words" notes |
 | `ui.js` | Study layout: dashboard, sidebar, bottom bar, settings, shortcuts |
 | `review.js` | Mistakes bank and spaced review |
 | `sync.js` | GitHub Gist sync, backup file, install button, update notice |
+| `diagrams.js` | Pathway diagrams (10) and organ maps + body map (11), drawn as SVG |
 | `icon-*.png`, `apple-touch-icon.png`, `favicon.svg` | App icons (normal + maskable for Android) |
 
 All text is stored as `"English|Français|Deutsch"`. To add a question, copy an existing entry in the data files and keep the three-language format.
