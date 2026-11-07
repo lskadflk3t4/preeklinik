@@ -25,6 +25,7 @@ Interactive metabolism, biochemistry and physiology drills in **English, French 
 Most questions are generated with fresh numbers and graphs each time.
 
 **Study tools**
+- Built-in manual (EN/FR/DE): every drill and tool explained step by step. Open it from the home page, the **?** button next to each drill title, Settings, the sidebar, or the **M** key.
 - Mistakes bank and spaced review: every wrong answer is saved exactly as you saw it and comes back after 1, 3, 7, 14 and 30 days (a wrong answer restarts it). Open it from **Review** in the bottom bar or sidebar. The bank syncs with your scores.
 - Today's goal, day streak, continue / random / weakest drill, sidebar on computers, bottom bar on phones, keyboard shortcuts, text size and theme settings.
 
@@ -107,6 +108,7 @@ Edit the files and push to GitHub. Before you push, change the version string at
 | `review.js` | Mistakes bank and spaced review |
 | `sync.js` | GitHub Gist sync, backup file, install button, update notice |
 | `diagrams.js` | Pathway diagrams (10) and organ maps + body map (11), drawn as SVG |
+| `manual.js` | Built-in trilingual manual and the “How it works” buttons |
 | `icon-*.png`, `apple-touch-icon.png`, `favicon.svg` | App icons (normal + maskable for Android) |
 
 All text is stored as `"English|Français|Deutsch"`. To add a question, copy an existing entry in the data files and keep the three-language format.

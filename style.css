@@ -688,3 +688,29 @@ body{padding-bottom:var(--navh)}
 .vbody .borg.on .bdec, .vbody .borg.ok .bdec, .vbody .borg.no .bdec{stroke:var(--surface)}
 .vbody .bvessel{stroke:#d64545; stroke-width:5; opacity:.35; stroke-linecap:round}
 .vbody .bsil circle, .vbody .bsil rect{fill:color-mix(in srgb, var(--muted) 12%, var(--surface)); stroke:var(--line); stroke-width:1.5}
+
+/* ===== user manual ===== */
+.manbtn{display:inline-flex; align-items:center; gap:6px; margin-left:auto; padding:4px 11px 4px 5px; min-height:34px; border:1px solid var(--line); border-radius:999px; background:var(--surface); color:var(--accent); font-weight:700; font-size:.82rem; cursor:pointer}
+.manbtn > span:first-child{display:inline-grid; place-items:center; width:24px; height:24px; border-radius:50%; background:var(--accent); color:var(--accent-ink); font-size:.85rem}
+.manbtn:hover{border-color:var(--accent)}
+@media (max-width:480px){ .manbtn .manbl{display:none} .manbtn{padding:4px} }
+.manhome{margin:0 0 12px; font-size:.92rem}
+.manhome a{font-weight:700; text-decoration:none}
+.manjump{display:flex; flex-wrap:wrap; gap:6px; margin:4px 0 8px}
+.mang{scroll-margin-top:72px}
+.manlist{display:flex; flex-direction:column; gap:8px}
+details.man{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); scroll-margin-top:72px}
+details.man > summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:10px; padding:12px 14px; font-family:var(--font-display); font-weight:700; font-size:1.02rem}
+details.man > summary::-webkit-details-marker{display:none}
+details.man > summary::after{content:"▸"; margin-left:auto; color:var(--muted)}
+details.man[open] > summary::after{content:"▾"}
+details.man[open] > summary{border-bottom:1px solid var(--line)}
+.mannum{font-family:var(--font-mono); font-size:.8rem; color:var(--accent); min-width:26px}
+.manbody{padding:6px 16px 14px}
+.manbody h4{margin:12px 0 4px; font-size:.75rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)}
+.manbody p{margin:0}
+.mansteps{margin:0; padding-left:22px} .mansteps li{margin:4px 0}
+.manopts{margin:0; display:grid; grid-template-columns:minmax(110px, max-content) 1fr; gap:6px 14px}
+.manopts dt{font-weight:700} .manopts dd{margin:0}
+@media (max-width:560px){ .manopts{grid-template-columns:1fr; gap:2px} .manopts dd{margin-bottom:8px} }
+.mantip{margin-top:12px!important; padding:9px 12px; border-radius:9px; background:var(--note-bg); border:1px solid var(--note-line); color:var(--note-ink)}
