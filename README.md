@@ -64,6 +64,18 @@ Interactive metabolism, biochemistry, physiology, cell biology, embryology, anat
 - S2 Exercise physiology: energy systems and excitation–contraction as blocks, acute exercise response (↑/↓), fibre-type table, training adaptations, VO₂max, RER, lactate, heat, altitude, DOMS
 - S3 Exercise calculations: Karvonen zones, METs → kcal, relative VO₂, Fick, sweat rate, energy availability, MET-minutes
 
+**Chemistry & pharmacy (16)**
+- K1 Atomic structure: protons/neutrons/electrons (atoms, ions, medical isotopes), atomic and mass number, electron configuration, orbitals and valence electrons
+- K2 Periodic table: groups and periods, electronegativity, ionisation energy, atomic and ionic radius (trends and exceptions)
+- K3 Chemical bonding: ionic vs covalent (ΔEN), polar vs nonpolar, hydrogen bonds, intermolecular forces
+- K4 General chemistry: mole concept, molar mass, balancing equations, stoichiometry and yield, concentrations, dilution, mg/dL ↔ mmol/L
+- K5 Acid–base chemistry: pH and pOH, strong and weak acids, buffers, Henderson–Hasselbalch (including blood gases), acid–base equilibrium
+- K6 Inorganic chemistry: ions and salts, oxidation–reduction, coordination compounds and chelating antidotes, metal ions
+- K7 Organic chemistry: hydrocarbons, functional groups, isomerism, reaction mechanisms, stereochemistry (CIP, R/S)
+- R1 Drug structures & functional groups · R2 Acid–base properties of drugs (% ionised, ion trapping) · R3 Drug solubility & dissolution (Noyes–Whitney, logP, Lipinski, BCS) · R4 Drug stability & degradation (t½, t90, storage)
+- R5 Stereochemistry of drugs · R6 Pharmacokinetics (ADME: F, Vd, CYP, t½, loading and maintenance doses) · R7 Pharmacodynamics (agonists/antagonists, Emax, therapeutic index) · R8 Pharmaceutical calculations & dosage forms
+- R9 Chemistry in medicine & pharmacy: pH, buffers, osmosis, diffusion, equilibrium, oxidation, solubility, stereochemistry and enzymes, each linked to its medical and pharmacy application
+
 Most questions are generated with fresh numbers and graphs each time.
 
 **Study tools**
@@ -165,6 +177,8 @@ Edit the files and push to GitHub. Before you push, change the version string at
 | `ndata.js` | Nutrition Science Manual (17 units × EN/FR/DE) and the 100 quiz questions |
 | `nut.js` | Nutrition tab: manual reader and quiz |
 | `sdata.js` | Sport & exercise drills (S1–S3) |
+| `kdata.js`, `kdata2.js` | Chemistry drills (K1–K7): element data, electron configurations, formula parser |
+| `rdata.js`, `rdata2.js` | Pharmacy drills (R1–R9) and the medicine/pharmacy concept table |
 | `lv.js` | Learning path (units that unlock) and the Progress page |
 | `icon-*.png`, `apple-touch-icon.png`, `favicon.svg` | App icons (normal + maskable for Android) |
 

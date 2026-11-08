@@ -1035,3 +1035,6 @@ body.gl-on #gltab{display:none}
 .pgdots{display:flex; flex-wrap:wrap; gap:3px; max-width:160px; justify-content:flex-end} .pgdot{width:10px; height:10px; border-radius:50%; background:var(--line)} .pgdot.open{background:var(--accent); opacity:.55} .pgdot.done{background:var(--good)} .pgdot.lock{background:var(--line)}
 @media (max-width:600px){ .pgrow{grid-template-columns:36px minmax(0, 1fr) 56px 40px} .pgrow .pbar{display:none} .pgdots{max-width:56px} }
 .chip.good{background:var(--good-bg); color:var(--good)} .chip.warn{background:var(--warn-bg); color:var(--warn)} .chip.bad{background:var(--bad-bg); color:var(--bad)}
+
+/* ===== chemistry & pharmacy tab: long drill names in clinical-bridge links may wrap on phones */
+.vbl{white-space:normal; overflow-wrap:anywhere}
