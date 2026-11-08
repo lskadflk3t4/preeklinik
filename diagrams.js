@@ -188,7 +188,7 @@ function newV1(pid, mode, cnt){
   const p = (!pid || pid === '__rand') ? pick(P.filter(x => x.st.length >= 3 && x.id !== prev.pid)) : PW[pid];
   mode = mode || prev.mode || 'study'; cnt = cnt != null ? cnt : (prev.cnt != null ? prev.cnt : 3);
   const s = S.v1 = {pid:p.id, mode, cnt, B:{}, active:null, checked:false, bank:[], num:{}, order:[], focus:null, msg:null};
-  if (mode === 'study') return;
+  if (mode === 'study' || mode === 'ov') return;
   const Lo = vLayoutPW(p), cm = [], ce = [];
   if (mode !== 'enz'){ const g = {}; Lo.nodes.forEach((nd, j) => { (g[nd.id] = g[nd.id] || []).push('n' + j); }); for (const id in g) cm.push({kind:'m', ans:id, keys:g[id]}); }
   if (mode !== 'mol'){ const g = {}; p.st.forEach((st, i) => { (g[st[2]] = g[st[2]] || []).push('e' + i); }); for (const id in g) ce.push({kind:'e', ans:id, keys:g[id]}); }
@@ -215,7 +215,8 @@ function newV1(pid, mode, cnt){
 function renderV1(){
   if (!S.v1) newV1(null, 'study', 3);
   const s = S.v1, p = PW[s.pid], study = s.mode === 'study';
-  let h = `<div class="controls">${pathwaySelect(s.pid, 'v1path', true)}${segmented(u('vMode'), [['study', U.vStudy], ['mol', U.vMol], ['enz', U.vEnz], ['mix', U.vMix]], s.mode, 'v1mode')}`
+  if (s.mode === 'ov') return renderV1ov();
+  let h = `<div class="controls">${pathwaySelect(s.pid, 'v1path', true)}${segmented(u('vMode'), [['ov', U.vOv], ['study', U.vStudy], ['mol', U.vMol], ['enz', U.vEnz], ['mix', U.vMix]], s.mode, 'v1mode')}`
     + (study ? '' : segmented(u('vGaps'), [['3', '3'], ['5', '5'], ['0', U.vAll]], String(s.cnt), 'v1cnt')) + `</div>`;
   const D = vPathSVG(p, {B:s.B, num:s.num, active:s.active, checked:s.checked, bank:s.bank, study, focus:s.focus});
   h += `<div class="card vcard qcard"><div class="vhead"><h3>${esc(T(p.n))}</h3>${p.loc && LOC[p.loc] ? `<span class="lgloc ${locCls(p.loc)}">${esc(T(LOC[p.loc]))}</span>` : ''}</div>`;
@@ -252,6 +253,7 @@ function notesV1(){ const s = S.v1, p = PW[s.pid], Lo = vLayoutPW(p), lines = []
 function vGrade(s, same){ let c = 0; s.order.forEach(k => { const b = s.B[k], ch = s.bank.find(x => x.u === b.val); b.state = ch && same(b, ch) ? 'ok' : 'no'; if (b.state === 'ok') c++; }); return c; }
 Object.assign(A, {
   v1mode(el){ newV1(S.v1.pid, el.dataset.v, S.v1.cnt); render(); },
+  v1ovp(el){ newV1(el.dataset.p, 'study', S.v1 ? S.v1.cnt : 3); render(); if (typeof window !== 'undefined') window.scrollTo(0, 0); },
   v1cnt(el){ newV1(S.v1.pid, S.v1.mode, +el.dataset.v); render(); },
   v1gap(el){ const s = S.v1; if (s.checked) return; const k = el.dataset.k, b = s.B[k]; if (!b) return;
     if (s.active === k && b.val != null){ b.val = null; } else s.active = k; render(); },
@@ -385,8 +387,8 @@ const OMAPS = [
 const OMW = 400;
 function omLbl(t){ return T(t); }
 function omLayout(m){
-  const nodes = {}; for (const id in m.nd){ const d = m.nd[id], inBlood = d[0] > 150 && d[0] < 250, ch = inBlood ? 13 : 17, fs = d[3] === 'm' ? 12 : 11.5;
-    const lines = vWrap(omLbl(d[2]), ch).slice(0, 3); const w = Math.max(44, ...lines.map(l => vTW(l, fs))) + 14; nodes[id] = {id, x:d[0], y:d[1], k:d[3], lines, w, h:10 + lines.length*14, t:d[2]}; }
+  const nodes = {}; for (const id in m.nd){ const d = m.nd[id], inBlood = !m.noBlood && d[0] > 150 && d[0] < 250, ch = inBlood ? 13 : (m.wrap || 17), fs = d[3] === 'm' ? 12 : 11.5;
+    const lines = vWrap(omLbl(d[2]), ch).slice(0, 3); const w = Math.max(44, ...lines.map(l => vTW(l, fs))) + 14; nodes[id] = {id, x:d[0], y:d[1], k:d[3], lines, w, h:10 + lines.length*14, t:d[2], p:d[4]}; }
   const edges = m.ed.map((e, i) => { const o = e[3] || {}, lab = e[2] ? vWrap(omLbl(e[2]), 15).slice(0, 3) : null;
     const lw = lab ? Math.max(...lab.map(l => vTW(l, 10.5))) + 10 : 0, lh = lab ? 6 + lab.length*12.5 : 0;
     if (!e[0]){ return {i, t:e[2], lab, lw, lh, px:o.at[0], py:o.at[1], solo:true}; }
@@ -396,24 +398,25 @@ function omLayout(m){
     const P0 = clip(A, C[0], C[1], 2), P2 = clip(B, C[0], C[1], 4);
     const d = `M${P0[0].toFixed(1)},${P0[1].toFixed(1)} Q${C[0].toFixed(1)},${C[1].toFixed(1)} ${P2[0].toFixed(1)},${P2[1].toFixed(1)}`;
     const px = (P0[0] + 2*C[0] + P2[0])/4, py = (P0[1] + 2*C[1] + P2[1])/4;
-    return {i, d, dash:!!o.d, t:e[2], lab, lw, lh, px, py}; });
+    return {i, d, dash:!!o.d, t:e[2], lab, lw, lh, px, py, p:o.p}; });
   return {nodes, edges};
 }
 function omSVG(m, o){ o = o || {}; const Lo = omLayout(m), G = o.B || {}, num = o.num || {};
   let s = `<svg class="vdg vomap" viewBox="0 0 ${OMW} ${m.h}" width="${OMW}" height="${m.h}" role="img" aria-label="${esc(T(m.n))}">${vMarkers()}`;
-  s += `<g class="vo vo-blood"><rect class="reg" x="152" y="2" width="96" height="${m.h - 4}" rx="14"/><text class="regn" x="200" y="${m.h - 10}" text-anchor="middle">${esc(T(VORG.blood))}</text></g>`;
+  if (!m.noBlood) s += `<g class="vo vo-blood"><rect class="reg" x="152" y="2" width="96" height="${m.h - 4}" rx="14"/><text class="regn" x="200" y="${m.h - 10}" text-anchor="middle">${esc(T(VORG.blood))}</text></g>`;
   m.org.forEach(r => { s += `<g class="vo vo-${VOCOL[r[0]] || r[0]}"><rect class="reg" x="${r[1]}" y="${r[2]}" width="${r[3]}" height="${r[4]}" rx="12"/><text class="regn" x="${r[1] + 8}" y="${r[2] + 15}">${esc(T(VORG[r[0]]))}</text></g>`; });
   Lo.edges.forEach(e => { if (!e.solo) s += `<path class="ome${e.dash ? ' dash' : ''}" d="${e.d}" marker-end="url(#vah-ink)"/>`; });
   const badge = (x, y, k) => num[k] ? `<g class="vbadge"><circle cx="${x}" cy="${y}" r="9.5"/><text x="${x}" y="${y + 4}" text-anchor="middle">${num[k]}</text></g>` : '';
   const gapCls = k => { const b = G[k]; if (!b) return ''; return ' gap' + (b.state ? ' ' + b.state : b.val != null ? ' filled' : '') + (o.active === k ? ' sel' : ''); };
   const gapText = (k, max) => { const b = G[k]; let t = '?'; if (b.state) t = T(b.ans); else if (b.val != null){ const c = o.bank.find(x => x.u === b.val); if (c) t = T(c.v); } return vWrap(t, max).slice(0, 3); };
   const act = k => G[k] && !o.checked ? ` data-act="v2gap" data-k="${k}" tabindex="0" role="button"` : '';
+  const lnk = id => id ? ` data-act="v1ovp" data-p="${id}" tabindex="0" role="button"` : '';
   Lo.edges.forEach(e => { if (!e.lab) return; const k = 'l' + e.i; let lab = e.lab, w = e.lw, h = e.lh;
     if (G[k]){ lab = gapText(k, 15); w = Math.max(30, w, ...lab.map(l => vTW(l, 10.5) + 10)); h = Math.max(h, 6 + lab.length*12.5); }
-    s += `<g class="oml${gapCls(k)}"${act(k)}><rect x="${e.px - w/2}" y="${e.py - h/2}" width="${w}" height="${h}" rx="6"/>` + vText(lab, e.px, e.py - h/2 + 3 + 10.5*0.85, 12.5, G[k] && !G[k].val && !G[k].state ? 'q' : '') + `</g>` + badge(e.px - w/2, e.py - h/2, k); });
+    s += `<g class="oml${gapCls(k)}${e.p ? ' lnk' : ''}"${act(k)}${lnk(e.p)}><rect x="${e.px - w/2}" y="${e.py - h/2}" width="${w}" height="${h}" rx="6"/>` + vText(lab, e.px, e.py - h/2 + 3 + 10.5*0.85, 12.5, G[k] && !G[k].val && !G[k].state ? 'q' : '') + `</g>` + badge(e.px - w/2, e.py - h/2, k); });
   for (const id in Lo.nodes){ const nd = Lo.nodes[id], k = 'n' + id; let lines = nd.lines, w = nd.w, h = nd.h;
     if (G[k]){ lines = gapText(k, nd.x > 150 && nd.x < 250 ? 12 : 17); w = Math.max(w, ...lines.map(l => vTW(l, 12) + 14)); h = Math.max(h, 10 + lines.length*14); }
-    s += `<g class="omn k${nd.k}${gapCls(k)}"${act(k)}><rect x="${nd.x - w/2}" y="${nd.y - h/2}" width="${w}" height="${h}" rx="${nd.k === 'm' ? 9 : 6}"/>` + vText(lines, nd.x, nd.y - h/2 + 5 + 12*0.85, 14, G[k] && !G[k].val && !G[k].state ? 'q' : '') + `</g>` + badge(nd.x - w/2, nd.y - h/2, k); }
+    s += `<g class="omn k${nd.k}${gapCls(k)}${nd.p ? ' lnk' : ''}"${act(k)}${lnk(nd.p)}><rect x="${nd.x - w/2}" y="${nd.y - h/2}" width="${w}" height="${h}" rx="${nd.k === 'm' ? 9 : 6}"/>` + vText(lines, nd.x, nd.y - h/2 + 5 + 12*0.85, 14, G[k] && !G[k].val && !G[k].state ? 'q' : '') + `</g>` + badge(nd.x - w/2, nd.y - h/2, k); }
   return s + `</svg>`;
 }
 const OMW_ = OMAPS.reduce((o, m) => (o[m.id] = m, o), {});
@@ -553,3 +556,35 @@ Object.assign(SCROLLMAP, {v2check:'.fb', v2bcheck:'.fb', v2bnext:'.qcard', v2new
 RENDER.organmap = renderV2;
 /* keyboard: Enter/Space on focused diagram boxes acts like a tap */
 if (typeof document !== 'undefined') document.addEventListener('keydown', e => { if (e.key !== 'Enter' && e.key !== ' ') return; const el = e.target.closest && e.target.closest('svg [data-act]'); if (!el) return; const f = A[el.dataset.act]; if (f){ e.preventDefault(); f(el); } });
+
+/* ---------- V1 overview: central metabolism map with clickable pathways ---------- */
+Object.assign(U, {
+  vOv:"Overview|Vue d'ensemble|Übersicht",
+  vOvT:"Central metabolism at a glance|Le métabolisme central en un coup d'œil|Zentraler Stoffwechsel auf einen Blick",
+  vOvD:"How the main pathways connect around three hubs: glucose-6-phosphate, pyruvate and acetyl-CoA. Tap any underlined pathway name to open its full diagram.|Comment les grandes voies se relient autour de trois carrefours : glucose-6-phosphate, pyruvate et acétyl-CoA. Touchez un nom de voie souligné pour ouvrir son schéma complet.|Wie die Hauptwege um drei Knotenpunkte zusammenhängen: Glucose-6-phosphat, Pyruvat und Acetyl-CoA. Tippe auf einen unterstrichenen Wegnamen, um sein ganzes Diagramm zu öffnen.",
+  vOvS:"Glucose enters glycolysis and meets glycogen and the pentose phosphate pathway at glucose-6-phosphate. Fructose and glycerol join at the triose phosphates. Pyruvate is the crossroads: lactate (Cori cycle), alanine (glucose–alanine cycle), back to glucose (gluconeogenesis) or into the mitochondrion as acetyl-CoA (PDH). Acetyl-CoA, also made by β-oxidation of fatty acids, is burned in the Krebs cycle, turned into ketone bodies, or used to build fatty acids and cholesterol in the cytosol. NADH and FADH₂ feed the electron transport chain to make ATP; nitrogen from amino acids leaves as urea.|Le glucose entre dans la glycolyse et rencontre le glycogène et la voie des pentoses au niveau du glucose-6-phosphate. Fructose et glycérol rejoignent les trioses phosphates. Le pyruvate est le carrefour : lactate (cycle de Cori), alanine (cycle glucose–alanine), retour au glucose (néoglucogenèse) ou entrée dans la mitochondrie en acétyl-CoA (PDH). L'acétyl-CoA, aussi produit par la β-oxydation des acides gras, est brûlé dans le cycle de Krebs, transformé en corps cétoniques ou utilisé pour fabriquer acides gras et cholestérol dans le cytosol. NADH et FADH₂ alimentent la chaîne respiratoire pour produire de l'ATP ; l'azote des acides aminés part sous forme d'urée.|Glucose geht in die Glykolyse und trifft bei Glucose-6-phosphat auf Glykogen und den Pentosephosphatweg. Fructose und Glycerin münden bei den Triosephosphaten. Pyruvat ist die Kreuzung: Laktat (Cori-Zyklus), Alanin (Glucose-Alanin-Zyklus), zurück zu Glucose (Glukoneogenese) oder als Acetyl-CoA ins Mitochondrium (PDH). Acetyl-CoA, auch aus der β-Oxidation von Fettsäuren, wird im Citratzyklus verbrannt, zu Ketonkörpern oder im Zytosol zu Fettsäuren und Cholesterin aufgebaut. NADH und FADH₂ speisen die Atmungskette zur ATP-Bildung; Stickstoff aus Aminosäuren verlässt den Körper als Harnstoff."
+});
+Object.assign(VORG, {cyto:"Cytosol|Cytosol|Zytosol", mito:"Mitochondrion|Mitochondrie|Mitochondrium"});
+const OVMAP = {id:'ov', h:710, noBlood:true, wrap:13, n:U.vOvT,
+ org:[['cyto', 4, 4, 392, 702], ['mito', 128, 352, 266, 350]],
+ nd:{glc:[200, 46, "Glucose|Glucose|Glucose", 'm'], glyc:[52, 132, "Glycogen|Glycogène|Glykogen", 'm'], g6p:[200, 132, "Glucose-6-P|Glucose-6-P|Glucose-6-P", 'm'],
+  r5p:[348, 132, "Ribose-5-P, NADPH|Ribose-5-P, NADPH|Ribose-5-P, NADPH", 'm'], fru:[348, 222, "Fructose|Fructose|Fructose", 'm'], tri:[200, 222, "Triose phosphates|Trioses phosphates|Triosephosphate", 'm'],
+  gly:[52, 222, "Glycerol|Glycérol|Glycerin", 'm'], pyr:[200, 306, "Pyruvate|Pyruvate|Pyruvat", 'm'], lac:[52, 306, "Lactate|Lactate|Laktat", 'm'], ala:[348, 306, "Alanine|Alanine|Alanin", 'm'],
+  fa:[52, 430, "Fatty acids|Acides gras|Fettsäuren", 'm'], chol:[52, 580, "Cholesterol|Cholestérol|Cholesterin", 'm'], accoa:[262, 412, "Acetyl-CoA|Acétyl-CoA|Acetyl-CoA", 'm'],
+  ket:[350, 488, "Ketone bodies|Corps cétoniques|Ketonkörper", 'm'], krebs:[250, 512, "Krebs cycle|Cycle de Krebs|Citratzyklus", 'p', 'krebs'],
+  nadh:[220, 596, "NADH + FADH₂|NADH + FADH₂|NADH + FADH₂", 'm'], atp:[352, 596, "ATP|ATP|ATP", 'm'], urea:[262, 668, "Urea cycle|Cycle de l'urée|Harnstoffzyklus", 'p', 'urea'],
+  aa:[52, 668, "Amino acids|Acides aminés|Aminosäuren", 'm']},
+ ed:[['glc', 'g6p', "glycolysis|glycolyse|Glykolyse", {p:'glycolysis'}], ['g6p', 'glyc', "glycogenesis|glycogenèse|Glykogenese", {p:'glycogenesis', c:-22}], ['glyc', 'g6p', "glycogenolysis|glycogénolyse|Glykogenolyse", {p:'glycogenolysis', c:-22}],
+  ['g6p', 'r5p', "pentose phosphate|pentoses phosphates|Pentosephosphatweg", {p:'ppp'}], ['g6p', 'tri'], ['tri', 'pyr'], ['fru', 'tri', "fructose|fructose|Fructose", {p:'fructose'}],
+  ['gly', 'tri', "lipolysis|lipolyse|Lipolyse", {p:'lipolysis'}], ['pyr', 'lac', "Cori cycle|cycle de Cori|Cori-Zyklus", {p:'cori'}], ['ala', 'pyr', "ALT", {p:'glcala'}],
+  ['pyr', 'glc', "gluconeogenesis|néoglucogenèse|Glukoneogenese", {p:'gng', d:1, v:[300, 176]}], ['pyr', 'accoa', "PDH", {p:'pdh'}],
+  ['fa', 'accoa', "β-oxidation|β-oxydation|β-Oxidation", {p:'betaox', c:-30}], ['accoa', 'fa', "fatty acid synthesis|synthèse des acides gras|Fettsäuresynthese", {p:'fas', c:-30}],
+  ['accoa', 'ket', "ketogenesis|cétogenèse|Ketogenese", {p:'ketogenesis'}], ['accoa', 'chol', "cholesterol synthesis|synthèse du cholestérol|Cholesterinsynthese", {p:'cholesterol', v:[120, 540]}],
+  ['accoa', 'krebs'], ['krebs', 'nadh'], ['nadh', 'atp', "ETC", {p:'etc'}], ['aa', 'urea', "NH₄⁺", {p:'transam'}]]};
+function renderV1ov(){
+  const s = S.v1;
+  let h = `<div class="controls">${segmented(u('vMode'), [['ov', U.vOv], ['study', U.vStudy], ['mol', U.vMol], ['enz', U.vEnz], ['mix', U.vMix]], 'ov', 'v1mode')}</div>`;
+  h += `<div class="card vcard qcard"><div class="vhead"><h3>${u('vOvT')}</h3></div><p class="note">${u('vOvD')}</p><div class="vscroll">${omSVG(OVMAP, {})}</div>`;
+  h += `<div class="vleg"><span><i class="vl-box km"></i>${u('lgMol')}</span><span><i class="vl-box kp"></i>${u('vProc')}</span><span><i class="vl-lnk">abc</i>${U.glOpenPw ? u('glOpenPw') : ''}</span></div><p class="vsum">${esc(u('vOvS'))}</p></div>`;
+  void s; return h;
+}

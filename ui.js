@@ -85,7 +85,7 @@ function ensureShell(){
   const side = document.createElement('nav'); side.id = 'side'; side.setAttribute('aria-label', 'Drills'); document.body.appendChild(side);
   const bn = document.createElement('nav'); bn.id = 'bnav'; bn.setAttribute('aria-label', 'Navigation'); document.body.appendChild(bn);
 }
-function sideHTML(){
+function sidebarHTML(){
   const t = DAYS[dayKey()] || {n:0};
   let h = `<a class="sitem shome${VIEW === 'home' ? ' cur' : ''}" href="#home"><span class="snum">⌂</span><span class="sname">${u('navHome')}</span><span class="smeta">${t.n}/${UIS.goal}</span></a>`;
   if (typeof rvDue === 'function'){ const nd = rvDue().length; h += `<a class="sitem${VIEW === 'review' ? ' cur' : ''}" href="#review"><span class="snum">🔁</span><span class="sname">${u('rvNav')}</span><span class="smeta">${nd ? `<em class="badge">${nd}</em>` : rvActive().length || ''}</span></a>`; }
@@ -112,7 +112,7 @@ render = function(){
   _render();
   if (typeof document === 'undefined') return;
   ensureShell();
-  document.getElementById('side').innerHTML = sideHTML();
+  document.getElementById('side').innerHTML = sidebarHTML();
   document.getElementById('bnav').innerHTML = bnavHTML();
   const cur = document.querySelector('#side .cur'); if (cur && cur.scrollIntoView && VIEW !== 'home'){ const s = document.getElementById('side'), r = cur.getBoundingClientRect(), sr = s.getBoundingClientRect(); if (r.top < sr.top || r.bottom > sr.bottom) cur.scrollIntoView({block:'nearest'}); }
   if (DR.some(d => d.id === VIEW) && SESS.n){ const dh = document.querySelector('.dhead .dtitle'); if (dh && !dh.querySelector('.sesschip')) dh.insertAdjacentHTML('beforeend', `<span class="chip muted sesschip" title="${esc(u('session'))}">${u('session')}: ${SESS.c}/${SESS.n}</span>`); }

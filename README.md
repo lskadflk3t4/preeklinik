@@ -6,7 +6,7 @@ Interactive metabolism, biochemistry and physiology drills in **English, French 
 - 47 metabolic pathways (glycolysis → sphingolipid degradation)
 - Pathway reconstruction, "what happens next", organ metabolism, hormone response, metabolic switching, enzyme detective, missing molecule, clinical cases plus a disease matcher, and energy (ATP) calculations
 - 30 clinical cases and 33 inherited metabolic disorders in the disease matcher
-- 10 Pathway diagrams: every pathway drawn as a real diagram (straight, branched or cycle), coloured by compartment. Study mode (tap a step for a plain-language explanation) or fill the empty molecule/enzyme boxes from a word bank
+- 10 Pathway diagrams: an overview map of central metabolism with clickable pathways, and every pathway drawn as a real diagram (straight, branched or cycle), coloured by compartment. Study mode (tap a step for a plain-language explanation) or fill the empty molecule/enzyme boxes from a word bank
 - 11 Organ maps: 9 inter-organ diagrams (fed state, overnight fast, starvation, Cori cycle, glucose–alanine cycle, nitrogen/ammonia, lipoproteins, ketone bodies, heme → bilirubin) with gap-fill exercises, plus a tappable body map with 40 "which organs?" questions
 
 **Biochemistry (5 drill types)**
@@ -25,6 +25,8 @@ Interactive metabolism, biochemistry and physiology drills in **English, French 
 Most questions are generated with fresh numbers and graphs each time.
 
 **Study tools**
+- Glossary side tab (📘 on the right edge, or the **G** key): every concept, enzyme, molecule, pathway and inherited disorder with a short definition; “On this page” lists the terms on the current screen.
+- Building-block chain builder for every ordering task (pathway reconstruction, metabolic timelines, physiology and protein sequences).
 - Built-in manual (EN/FR/DE): every drill and tool explained step by step. Open it from the home page, the **?** button next to each drill title, Settings, the sidebar, or the **M** key.
 - Mistakes bank and spaced review: every wrong answer is saved exactly as you saw it and comes back after 1, 3, 7, 14 and 30 days (a wrong answer restarts it). Open it from **Review** in the bottom bar or sidebar. The bank syncs with your scores.
 - Today's goal, day streak, continue / random / weakest drill, sidebar on computers, bottom bar on phones, keyboard shortcuts, text size and theme settings.
@@ -109,6 +111,8 @@ Edit the files and push to GitHub. Before you push, change the version string at
 | `sync.js` | GitHub Gist sync, backup file, install button, update notice |
 | `diagrams.js` | Pathway diagrams (10) and organ maps + body map (11), drawn as SVG |
 | `manual.js` | Built-in trilingual manual and the “How it works” buttons |
+| `ux.js` | Building-block chain builder, diagrams in place of text maps, compact trail |
+| `glossary.js` | Glossary side tab and drawer |
 | `icon-*.png`, `apple-touch-icon.png`, `favicon.svg` | App icons (normal + maskable for Android) |
 
 All text is stored as `"English|Français|Deutsch"`. To add a question, copy an existing entry in the data files and keep the three-language format.
