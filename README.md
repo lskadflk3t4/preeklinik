@@ -79,7 +79,7 @@ Interactive metabolism, biochemistry, physiology, cell biology, embryology, anat
 Most questions are generated with fresh numbers and graphs each time.
 
 **Study tools**
-- Glossary side tab (📘 on the right edge, or the **G** key): every concept, enzyme, molecule, pathway and inherited disorder, plus 76 cell biology, embryology and anatomy terms with Latin names, each with a short definition; “On this page” lists the terms on the current screen.
+- Glossary side tab (📘 on the right edge, or the **G** key): every concept, enzyme, molecule, pathway and inherited disorder, plus 76 cell biology, embryology and anatomy terms with Latin names, each with a short definition; “On this page” lists the terms on the current screen. Every entry also has a 🧒 **In simple words** box that explains it for beginners, as if to a 10-year-old (switch it on/off with the 🧒 button at the top of the glossary).
 - Building-block chain builder for every ordering task (pathway reconstruction, metabolic timelines, physiology and protein sequences).
 - Built-in manual (EN/FR/DE): every drill and tool explained step by step. Open it from the home page, the **?** button next to each drill title, Settings, the sidebar, or the **M** key.
 - **Learning path**: every drill is split into units from basics to advanced. Unit 1 is open; a unit is mastered (⭐) when 8 of your last 10 answers in it are correct, which unlocks the next unit. Pathway drills (1, 2, 7, and the tests in 10) use four pathway tiers (core energy → fuel switching → lipoproteins/amino acids/heme → nucleotides/steroids/sphingolipids). Settings → Learning path → Free practice opens everything.
@@ -179,6 +179,7 @@ Edit the files and push to GitHub. Before you push, change the version string at
 | `sdata.js` | Sport & exercise drills (S1–S3) |
 | `kdata.js`, `kdata2.js` | Chemistry drills (K1–K7): element data, electron configurations, formula parser |
 | `rdata.js`, `rdata2.js` | Pharmacy drills (R1–R9) and the medicine/pharmacy concept table |
+| `kids.js`, `kids2.js` | Glossary “In simple words”: beginner explanations (as if for a 10-year-old) for every glossary entry |
 | `lv.js` | Learning path (units that unlock) and the Progress page |
 | `icon-*.png`, `apple-touch-icon.png`, `favicon.svg` | App icons (normal + maskable for Android) |
 

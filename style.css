@@ -1038,3 +1038,10 @@ body.gl-on #gltab{display:none}
 
 /* ===== chemistry & pharmacy tab: long drill names in clinical-bridge links may wrap on phones */
 .vbl{white-space:normal; overflow-wrap:anywhere}
+
+/* ===== glossary: "in simple words" boxes for beginners */
+.glkid{margin-top:8px; padding:8px 10px; border-radius:10px; background:color-mix(in srgb, var(--accent, #0f6e7e) 9%, transparent); border-left:3px solid var(--accent, #0f6e7e)}
+.glkid strong{display:block; font-size:.82rem; letter-spacing:.02em; margin-bottom:2px}
+.glkid p{margin:0}
+.glkidbar{display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; margin:6px 0 4px}
+.glkidhint{font-size:.8rem; color:var(--muted)}
