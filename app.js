@@ -631,7 +631,7 @@ function renderD9(){
 
 /* ===================== HOME ===================== */
 function renderHome(){
-  const GR = [['met', 'grpMet'], ['bio', 'grpBio'], ['phy', 'grpPhy']].filter(g => DR.some(d => (d.g || 'met') === g[0]));
+  const GR = (typeof GRPS !== 'undefined' ? GRPS : [['met', 'grpMet'], ['bio', 'grpBio'], ['phy', 'grpPhy']]).filter(g => DR.some(d => (d.g || 'met') === g[0]));
   let h = `<section class="intro"><p>${u('subtitle', {n:P.length, d:DR.length})}</p>`;
   if (GR.length > 1) h += `<nav class="jumps" aria-label="${esc(u('jump'))}">` + GR.map(g => `<button type="button" class="libchip" data-act="jump" data-v="grp-${g[0]}">${u(g[1])}</button>`).join('') + `</nav>`;
   h += `</section>`;

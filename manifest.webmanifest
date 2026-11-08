@@ -2,7 +2,7 @@
   "id": "./",
   "name": "Preclinical Drills",
   "short_name": "Preclinical",
-  "description": "Offline drills (EN/FR/DE): metabolism, biochemistry and physiology — pathways, kinetics, buffers, protein structure, graphs, calculations and comparisons.",
+  "description": "Offline drills (EN/FR/DE): metabolism, biochemistry, physiology, cell biology, embryology, anatomy, nutrition and sport — pathways, diagrams, kinetics, graphs, calculations, building blocks and comparisons.",
   "start_url": "./#home",
   "scope": "./",
   "display": "standalone",

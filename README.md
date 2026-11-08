@@ -1,6 +1,6 @@
 # Preclinical Drills (offline PWA)
 
-Interactive metabolism, biochemistry and physiology drills in **English, French and German**. The app works completely offline once installed. It can sync your progress between devices through a private GitHub Gist.
+Interactive metabolism, biochemistry, physiology, cell biology, embryology, anatomy, nutrition and sports drills in **English, French and German**. The app works completely offline once installed. It can sync your progress between devices through a private GitHub Gist.
 
 **Metabolism (11 drill types)**
 - 47 metabolic pathways (glycolysis → sphingolipid degradation)
@@ -22,12 +22,56 @@ Interactive metabolism, biochemistry and physiology drills in **English, French 
 - P3 Calculations: cardiac output, MAP, Fick, O₂ content, clearance, GFR, FENa, osmolality, alveolar gas equation, A–a gradient, compliance, anion gap, Winter, Nernst…
 - P4 Compare & contrast: 13 comparison tables (muscle types, lung disease, diuretics, DI, AKI, acid–base, autonomic…)
 
+**Cell biology (8 drill types)**
+- C1 Cell map: tap the organelle that does a job on a drawn cell (13 structures), or name the job of a highlighted organelle
+- C2 Protein trafficking: secretory, lysosomal, nuclear, mitochondrial and endocytic routes as blocks; sorting signals and vesicle coats; what-if cards (I-cell disease, KDEL, ΔF508 CFTR, Zellweger)
+- C3 Cell cycle & checkpoints: label cyclin–CDK pairs and checkpoints on a cycle diagram, order the phases, what-if cards (p53, Rb, HPV, vincristine, palbociclib)
+- C4 Mitosis & meiosis: phase blocks with chromosome drawings (with or without names), recognise a phase, mitosis vs meiosis I/II table, oocyte arrest and nondisjunction
+- C5 Membrane transport sorter: 23 examples into diffusion, facilitated, primary/secondary active and vesicular; drug and disease questions
+- C6 Signal transduction: Gs–cAMP, Gq–IP₃, RTK–Ras–MAPK, insulin–PI3K–Akt, JAK–STAT, NO–cGMP and steroid chains as blocks; hormone → system; toxins and drugs
+- C7 Apoptosis: fill the intrinsic/extrinsic pathway diagram, apoptosis vs necrosis, clinical cases
+- C8 Junctions & cytoskeleton: match junctions, filaments and intermediate-filament markers; drug/disease sorter; clinical cases
+
+**Embryology (8 drill types)**
+- E1 Timeline builder: weeks 1–2, weeks 3–8 and fetal milestones as blocks, plus timing facts
+- E2 Germ layer sorter: 34 derivatives into surface ectoderm, neuroectoderm, neural crest, mesoderm, endoderm (or a 3-layer version); mesoderm parts; clinical
+- E3 Pharyngeal apparatus: arch matrix (nerve, muscles, skeleton, artery), pouches and clefts, DiGeorge / Treacher Collins / branchial cysts
+- E4 Fetal circulation: colour-coded diagram (O₂ content) to tap and label; adult remnants; changes at birth
+- E5 Heart development: septation steps as blocks, heart tube → adult structures, failed step → defect
+- E6 Neural tube & brain vesicles: tappable embryo (neuropores, somites, neural crest), vesicle diagram to label, neural tube defects
+- E7 Gut rotation & urogenital tract: midgut rotation blocks, fore/mid/hindgut sorter, sex-differentiation diagram to label, disorders
+- E8 Teratogen matcher: 16 drugs and infections, critical windows
+
+**Anatomy (6 drill types)**
+- A1 Lesion localisation: tap the injured part of the brachial plexus, upper and lower limb nerve vignettes
+- A2 Plexus builder: trace fibres from root to branch as blocks, label the brachial plexus, lumbosacral nerves
+- A3 Vascular route builder: arterial, venous, portal, cerebral and lymphatic routes as blocks; anastomoses
+- A4 Layers in order: scalp, abdominal wall, lumbar puncture, chest drain, gut wall, epidermis, artery; spermatic cord coverings; hernias and intracranial bleeds
+- A5 Foramina & cranial nerves: tappable skull base (11 openings), contents of a highlighted foramen, cranial nerve functions and lesions
+- A6 Muscle cards: 34 limb muscles by region – build the card (origin, insertion, nerve, action), “nerve cut: which muscles fail?”, which muscle?
+
+**Across subjects (2 drill types)**
+- X1 Compare: 12 easily confused pairs (tight junction vs desmosome, Wolffian vs Müllerian, radial vs ulnar nerve, epidural vs subdural…) sorted into A, B or both, with a side-by-side table
+- X2 Term trainer: Latin ↔ everyday names and EN ↔ FR ↔ DE translation for the glossary terms
+- Every new drill shows a 🩺 Clinical bridge after the answer that links to a disease or another drill, and every mistake goes to Review (now including the Pathway diagram and Organ map drills)
+
+**Nutrition (2)**
+- N1 Nutrition Science Manual: the full 17-unit manual (EU standards, EFSA values) to read unit by unit in your language, with “Quiz this unit”
+- N2 Nutrition Science Quiz: 100 multiple-choice questions by unit; each answer links back to the manual unit; misses go to Review
+
+**Sport & exercise (3)**
+- S1 Sports nutrition: carbohydrate and protein targets, timing, hydration and heat (↑/↓), IOC supplements, RED-S and iron, g/kg calculations
+- S2 Exercise physiology: energy systems and excitation–contraction as blocks, acute exercise response (↑/↓), fibre-type table, training adaptations, VO₂max, RER, lactate, heat, altitude, DOMS
+- S3 Exercise calculations: Karvonen zones, METs → kcal, relative VO₂, Fick, sweat rate, energy availability, MET-minutes
+
 Most questions are generated with fresh numbers and graphs each time.
 
 **Study tools**
-- Glossary side tab (📘 on the right edge, or the **G** key): every concept, enzyme, molecule, pathway and inherited disorder with a short definition; “On this page” lists the terms on the current screen.
+- Glossary side tab (📘 on the right edge, or the **G** key): every concept, enzyme, molecule, pathway and inherited disorder, plus 76 cell biology, embryology and anatomy terms with Latin names, each with a short definition; “On this page” lists the terms on the current screen.
 - Building-block chain builder for every ordering task (pathway reconstruction, metabolic timelines, physiology and protein sequences).
 - Built-in manual (EN/FR/DE): every drill and tool explained step by step. Open it from the home page, the **?** button next to each drill title, Settings, the sidebar, or the **M** key.
+- **Learning path**: every drill is split into units from basics to advanced. Unit 1 is open; a unit is mastered (⭐) when 8 of your last 10 answers in it are correct, which unlocks the next unit. Pathway drills (1, 2, 7, and the tests in 10) use four pathway tiers (core energy → fuel switching → lipoproteins/amino acids/heme → nucleotides/steroids/sphingolipids). Settings → Learning path → Free practice opens everything.
+- **Progress page** (📈 in the sidebar, the home dashboard or key **P**): answers, accuracy, active days, streak, units mastered, a 30-day activity chart, the spaced-review forecast for the next 14 days, weakest units, and accuracy plus unit status for every drill.
 - Mistakes bank and spaced review: every wrong answer is saved exactly as you saw it and comes back after 1, 3, 7, 14 and 30 days (a wrong answer restarts it). Open it from **Review** in the bottom bar or sidebar. The bank syncs with your scores.
 - Today's goal, day streak, continue / random / weakest drill, sidebar on computers, bottom bar on phones, keyboard shortcuts, text size and theme settings.
 
@@ -113,11 +157,24 @@ Edit the files and push to GitHub. Before you push, change the version string at
 | `manual.js` | Built-in trilingual manual and the “How it works” buttons |
 | `ux.js` | Building-block chain builder, diagrams in place of text maps, compact trail |
 | `glossary.js` | Glossary side tab and drawer |
+| `sx.js` | Engine for the cell biology, embryology and anatomy drills: tap-the-structure, labelling/matching, picture blocks, flow diagrams, clinical bridges, Review and glossary hooks |
+| `cdata.js`, `cdata2.js` | Cell biology drills (C1–C8), cell and mitosis drawings |
+| `edata.js`, `edata2.js` | Embryology drills (E1–E8), embryo and flow diagrams |
+| `adata.js`, `adata2.js` | Anatomy drills (A1–A6), brachial plexus and skull-base drawings, muscle table |
+| `xdata.js` | Compare and term-trainer drills, glossary terms with Latin names, manual sections |
+| `ndata.js` | Nutrition Science Manual (17 units × EN/FR/DE) and the 100 quiz questions |
+| `nut.js` | Nutrition tab: manual reader and quiz |
+| `sdata.js` | Sport & exercise drills (S1–S3) |
+| `lv.js` | Learning path (units that unlock) and the Progress page |
 | `icon-*.png`, `apple-touch-icon.png`, `favicon.svg` | App icons (normal + maskable for Android) |
 
 All text is stored as `"English|Français|Deutsch"`. To add a question, copy an existing entry in the data files and keep the three-language format.
 
-## 6. Troubleshooting
+## 6. Offline use
+
+After the first visit (or install) the service worker stores every file of the app, so all drills, the manual, the glossary, Review and Progress work with no connection. Progress is saved on the device; GitHub sync is optional and catches up when you are back online. The Google fonts are cached the first time they load; until then the app uses your system font.
+
+## 7. Troubleshooting
 
 - **Stuck on "Loading…" / "The app did not start":** some files are missing from the repository root, or are in a subfolder. Check that every `.js` file sits next to `index.html`, wait a minute for GitHub Pages to finish deploying, then tap **Clear cache and reload**.
 
