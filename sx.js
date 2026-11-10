@@ -135,7 +135,7 @@ BXK.lab = function(id, s, it){
 };
 /* blocks with drawings */
 const _sxBlk = blkBody;
-blkBody = function(d){ if (d.t === 'fig') return `<span class="bk-fig">${d.svg}</span>` + (d.x ? `<span class="bk-t">${esc(T(d.x))}</span>` : ''); return _sxBlk(d); };
+blkBody = function(d, hide){ if (d.t === 'fig') return `<span class="bk-fig">${d.svg}</span>` + (d.x ? `<span class="bk-t">${esc(T(d.x))}</span>` : ''); return _sxBlk(d, hide); };
 
 const _sxNew = newBX;
 newBX = function(id){

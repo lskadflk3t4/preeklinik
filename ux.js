@@ -14,9 +14,9 @@ Object.assign(U, {
   uxNOk:"{n}/{t} positions correct – the correct order is shown in the diagram below.|{n}/{t} positions correctes – l'ordre correct est montré dans le schéma ci-dessous.|{n}/{t} Positionen richtig – die richtige Reihenfolge zeigt das Diagramm unten.",
   uxSeeDiag:"the correct order is shown in the diagram below.|l'ordre correct est montré dans le schéma ci-dessous.|die richtige Reihenfolge zeigt das Diagramm unten."
 });
-function blkBody(d){
+function blkBody(d, hide){
   if (d.t === 'step'){ const p = PW[d.p], s = p.st[d.i];
-    return `<span class="bk-rx"><span class="bk-m">${esc(mol(s[0]))}</span><span class="bk-ar" aria-hidden="true">→</span><span class="bk-m">${esc(mol(s[1]))}</span></span>`
+    return `<span class="bk-rx">${hide ? `<span class="bk-m bk-hid" aria-label="?">?</span>` : `<span class="bk-m">${esc(mol(s[0]))}</span>`}<span class="bk-ar" aria-hidden="true">→</span><span class="bk-m">${esc(mol(s[1]))}</span></span>`
       + `<span class="bk-meta"><span class="bk-e">${esc(typeof enzShort === 'function' ? enzShort(s[2]) : enz(s[2]))}</span>` + (s[3] ? `<span class="bk-sd">${tokHTML(T(s[3]))}</span>` : '') + `</span>`; }
   if (d.t === 'enz') return `<span class="bk-e">${esc(enz(d.id))}</span>`;
   if (d.t === 'mol') return `<span class="bk-m">${esc(mol(d.id))}</span>`;
@@ -35,7 +35,7 @@ function bkJoin(o, k, get){
 }
 orderHTML = function(o, ns){
   const get = uid => o.items.find(i => i.uid === uid), off = o.fixed ? 1 : 0, kind = o.items[0] ? blkKind(o.items[0].d) : 'txt', J = kind === 'mol' || kind === 'enz';
-  const bbk = (d, num, extra, attrs, tag) => `<${tag || 'span'} class="bbk k-${blkKind(d)}${blkLoc(d)}${extra || ''}"${attrs || ''}>${num != null ? `<span class="bbnum">${num}</span>` : ''}<span class="bbbody">${blkBody(d)}</span></${tag || 'span'}>`;
+  const bbk = (d, num, extra, attrs, tag) => `<${tag || 'span'} class="bbk k-${blkKind(d)}${blkLoc(d)}${extra || ''}"${attrs || ''}>${num != null ? `<span class="bbnum">${num}</span>` : ''}<span class="bbbody">${blkBody(d, HIDE_PAIRS && ns === 'd1' && !o.checked)}</span></${tag || 'span'}>`;
   let h = `<div class="bb bb-${kind}${o.checked ? ' done' : ''}"><div class="bb-col"><div class="col-h">${u('uxTrack')}</div><ol class="bb-track">`;
   if (o.fixed) h += `<li>${bbk(o.fixed, 1, ' fixed', ` title="${esc(u('fixedStart'))}"`)}</li>`;
   o.seq.forEach((uid, k) => { if ((k > 0 || o.fixed) && J) h += bkJoin(o, k, get);

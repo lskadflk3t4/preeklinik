@@ -490,6 +490,7 @@ body{padding-bottom:var(--navh)}
 .blk::before{content:""; position:absolute; left:0; top:2px; bottom:2px; width:4px; border-radius:3px; background:var(--lc, var(--loc-x))}
 .blk .m{overflow-wrap:anywhere; hyphens:auto; justify-self:start; max-width:100%}
 .blk-b{justify-self:start}
+.bk-m.bk-hid{opacity:.5; border:1px dashed currentColor; background:transparent; min-width:2.2em; text-align:center}
 .blk-to{height:2px; background:var(--enz); position:relative; margin-right:7px}
 .blk-to::after{content:""; position:absolute; right:-8px; top:-5px; border:6px solid transparent; border-left:9px solid var(--enz); border-right:0}
 .blk-ez{grid-column:1 / -1; display:flex; flex-wrap:wrap; align-items:center; gap:4px 8px; padding:3px 0 0 8px; border-left:2px dotted var(--enz); margin-left:6px}

@@ -36,7 +36,7 @@ back:"All drills|Tous les exercices|Alle Übungen", pathway:"Pathway|Voie|Weg", 
 check:"Check|Vérifier|Prüfen", next:"Next|Suivant|Weiter", reshuffle:"New round|Nouvelle série|Neue Runde", showMap:"Show pathway map|Afficher la carte|Karte anzeigen", hideMap:"Hide map|Masquer la carte|Karte ausblenden",
 correct:"Correct|Correct|Richtig", wrong:"Not quite|Pas tout à fait|Nicht ganz", reset:"Reset scores|Réinitialiser les scores|Punkte zurücksetzen",
 pool:"Tap the cards in order|Touchez les cartes dans l'ordre|Tippe die Karten der Reihe nach an", seq:"Your order (tap a card to remove it)|Votre ordre (touchez une carte pour la retirer)|Deine Reihenfolge (zum Entfernen antippen)",
-modeCards:"Full reactions|Réactions complètes|Vollständige Reaktionen", modeEnz:"Enzymes only|Enzymes seules|Nur Enzyme", modeMol:"Molecules only|Molécules seules|Nur Moleküle",
+hidePairs:"Hide pairs: off|Masquer les paires : non|Paare ausblenden: aus", hidePairsOn:"Hide pairs: on|Masquer les paires : oui|Paare ausblenden: an", hidePairsNote:"Pairs hidden: each block shows only its enzyme and product, so you can't chain blocks by matching molecules. Everything is revealed after Check.|Paires masquées : chaque bloc ne montre que l'enzyme et le produit, impossible d'enchaîner les blocs en associant les molécules. Tout s'affiche après Vérifier.|Paare ausgeblendet: Jeder Block zeigt nur Enzym und Produkt, sodass du die Blöcke nicht über gleiche Moleküle verketten kannst. Nach „Prüfen“ wird alles angezeigt.", modeCards:"Full reactions|Réactions complètes|Vollständige Reaktionen", modeEnz:"Enzymes only|Enzymes seules|Nur Enzyme", modeMol:"Molecules only|Molécules seules|Nur Moleküle",
 irr:"irreversible|irréversible|irreversibel", rl:"rate-limiting|limitante|geschwindigkeitsbestimmend", backToStart:"back to the start (cycle)|retour au départ (cycle)|zurück zum Anfang (Zyklus)",
 newBranch:"separate branch / parallel step|branche séparée / étape parallèle|separater Zweig / paralleler Schritt", allCorrect:"All in the right order!|Tout est dans le bon ordre !|Alles in der richtigen Reihenfolge!",
 nCorrect:"{n}/{t} positions correct. Correct order:|{n}/{t} positions correctes. Ordre correct :|{n}/{t} Positionen richtig. Richtige Reihenfolge:",
@@ -154,6 +154,7 @@ function mapHTML(p, B){ B = B || {};
   if (p.cyc) h += `<li class="loop">↺ ${esc(u('backToStart'))}</li>`;
   return h + `</ol>` + legendHTML(p);
 }
+let HIDE_PAIRS = store.get('hidePairs', false);
 let INFO_OPEN = null;
 function infoHTML(p){ if (INFO_OPEN === null) INFO_OPEN = typeof window !== 'undefined' && window.matchMedia ? window.matchMedia('(min-width: 700px)').matches : true;
   return `<details class="info"${INFO_OPEN ? ' open' : ''}><summary><span class="catlbl">${esc(T(CATS[p.cat]))}</span><span class="info-h"><h3>${esc(T(p.n))}</h3><span class="chip muted">${p.st.length} ${u('steps')}</span></span></summary><p>${esc(T(p.s))}</p></details>`; }
@@ -234,7 +235,8 @@ function renderD1(){
   const s = S.d1, p = PW[s.pid];
   let h = `<div class="controls">${pathwaySelect(s.pid, 'd1path', true)}<div class="field"><span>${u('mode')}</span>${segmented(u('mode'), [['cards','modeCards'],['enz','modeEnz'],['mol','modeMol']].map(x => [x[0], U[x[1]]]), s.mode, 'd1mode')}</div></div>`;
   h += infoHTML(p);
-  h += `<div class="actions"><button type="button" class="btn" data-act="d1map">${s.showMap ? u('hideMap') : u('showMap')}</button><button type="button" class="btn" data-act="d1new">${u('reshuffle')}</button></div>`;
+  h += `<div class="actions"><button type="button" class="btn" data-act="d1map">${s.showMap ? u('hideMap') : u('showMap')}</button><button type="button" class="btn" data-act="d1new">${u('reshuffle')}</button>${s.o.items[0] && s.o.items[0].d.t === 'step' ? `<button type="button" class="btn${HIDE_PAIRS ? ' primary' : ''}" data-act="d1hide" aria-pressed="${HIDE_PAIRS}">${u(HIDE_PAIRS ? 'hidePairsOn' : 'hidePairs')}</button>` : ''}</div>`;
+  if (HIDE_PAIRS && !s.o.checked && s.o.items[0] && s.o.items[0].d.t === 'step') h += `<p class="note">${u('hidePairsNote')}</p>`;
   if (s.showMap) h += `<div class="card mapcard"><p class="note">${u('studyNote')}</p>${mapHTML(p)}</div>`;
   h += `<div class="card">${orderHTML(s.o, 'd1')}${s.o.items[0] && s.o.items[0].d.t === 'step' ? legendHTML(p) : ''}</div>`;
   if (s.o.checked && !s.showMap) h += `<div class="card mapcard">${mapHTML(p)}</div>`;
@@ -693,6 +695,7 @@ const A = {
   d1mode(el){ newD1(S.d1.pid, el.dataset.v); render(); },
   d1new(){ newD1(S.d1.pid, S.d1.mode); render(); },
   d1map(){ S.d1.showMap = !S.d1.showMap; render(); },
+  d1hide(){ HIDE_PAIRS = !HIDE_PAIRS; store.set('hidePairs', HIDE_PAIRS); render(); },
   d2ans(el){ const s = S.d2; if (s.q.chosen != null) return; s.q.chosen = +el.dataset.k; const ok = s.q.opts[s.q.chosen] === s.q.correct; s.n++; if (ok) s.ok++; addScore('next', ok ? 1 : 0, 1); render(); },
   d2next(){ const s = S.d2; s.i++; makeQ2(); render(); },
   d2again(){ newD2(S.d2.pid); render(); }, d2other(){ newD2('__rand'); render(); },
