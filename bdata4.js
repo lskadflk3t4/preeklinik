@@ -42,7 +42,7 @@ const chgTxt = q => q ? (Math.abs(q) > 1 ? Math.abs(q) : '') + (q > 0 ? '+' : 'â
 const ELC = {O:'o', N:'n', S:'s', P:'p', I:'i'};
 /* opt: {hl:[atom idxâ€¦], bl: px per bond, full: bool, title} */
 function molSVG(id, opt){
-  opt = opt || {}; const m = MOL[id], A_ = m.a, B_ = m.b, bl = opt.bl || 30, full = opt.full != null ? opt.full : MOLC === 'full';
+  opt = opt || {}; const m = opt.m || MOL[id], A_ = m.a, PX = m.px ? new Set(m.px) : null, B_ = m.b, bl = opt.bl || 30, full = opt.full != null ? opt.full : MOLC === 'full';
   const n = A_.length, nb = A_.map(() => []);
   B_.forEach(b => { nb[b[0]].push(b[1]); nb[b[1]].push(b[0]); });
   const P = A_.map(a => [a[1]*bl, a[2]*bl]);
@@ -51,7 +51,7 @@ function molSVG(id, opt){
   const lab = A_.map((a, i) => {
     const sym = a[0], q = a[3] || 0, h = a[4] || 0, isC = sym === 'C';
     if (isC && !full && !q && nb[i].length) return null;
-    const ps = !!PSEUDO[sym];
+    const ps = !!PSEUDO[sym] || !!(PX && PX.has(i));
     const dirs = nb[i].map(j => Math.atan2(P[j][1] - P[i][1], P[j][0] - P[i][0]));
     const free = ang => Math.min(...dirs.map(d => { let x = Math.abs(d - ang) % (2*Math.PI); return x > Math.PI ? 2*Math.PI - x : x; }).concat([9]));
     let hs = 'r';  // side for the H's
@@ -63,8 +63,9 @@ function molSVG(id, opt){
     if (q){ let best = -1; [-Math.PI/4, -3*Math.PI/4, Math.PI/4, 3*Math.PI/4].forEach(ang => {
         let f = free(ang); if (h && ((hs === 'r' && Math.cos(ang) > 0) || (hs === 'l' && Math.cos(ang) < 0) || (hs === 'u' && Math.sin(ang) < 0) || (hs === 'd' && Math.sin(ang) > 0))) f -= 1.2;
         if (f > best + 1e-6){ best = f; qa = ang; } }); }
-    const w = (ps ? sym.length : 1)*cw;
-    return {sym, q, h: ps ? 0 : h, hs, qa, w, ps};
+    let w = (ps ? sym.length : 1)*cw, an = null;
+    if (ps && sym.length > 3 && nb[i].length === 1){ an = P[i][0] >= P[nb[i][0]][0] ? 'start' : 'end'; w = cw*1.2; }   // long abbreviation: written away from its bond
+    return {sym, q, h: ps ? 0 : h, hs, qa, w, ps, an, tw:sym.length*cw*0.92};
   });
   /* bond end shortened where a label sits */
   const cut = (i, j) => { const L0 = lab[i]; if (!L0) return 0; const dx = P[j][0] - P[i][0], dy = P[j][1] - P[i][1], d = Math.hypot(dx, dy) || 1;
@@ -98,6 +99,9 @@ function molSVG(id, opt){
     if (hl.has(i)) under += `<circle class="mhl" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(bl*0.32).toFixed(1)}"/>`;
     if (!L0) return;
     const cls = L0.ps ? 'mt mps' : 'mt' + (ELC[L0.sym] ? ' el-' + ELC[L0.sym] : '');
+    if (L0.an){ const x1 = L0.an === 'start' ? x - cw*0.6 : x + cw*0.6;
+      texts += `<text class="${cls}" x="${x1.toFixed(1)}" y="${y.toFixed(1)}" font-size="${fs}" text-anchor="${L0.an}" dominant-baseline="central">${esc(L0.sym)}</text>`;
+      grow(x1, y - fs*0.6); grow(x1 + (L0.an === 'start' ? L0.tw : -L0.tw), y + fs*0.6); return; }
     texts += `<text class="${cls}" x="${x.toFixed(1)}" y="${y.toFixed(1)}" font-size="${fs}" text-anchor="middle" dominant-baseline="central">${esc(L0.sym)}</text>`;
     grow(x - L0.w/2, y - fs*0.6); grow(x + L0.w/2, y + fs*0.6);
     if (L0.h){ const hT = `H<tspan font-size="${(fs*0.72).toFixed(1)}" dy="${(fs*0.28).toFixed(1)}">${subN(L0.h)}</tspan>`, hw = cw*(L0.h > 1 ? 1.6 : 1);

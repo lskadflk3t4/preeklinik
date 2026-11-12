@@ -1,10 +1,11 @@
 # Preclinical Drills (offline PWA)
 
-Interactive metabolism, biochemistry, physiology, cell biology, embryology, anatomy, nutrition and sports drills in **English, French and German**. The app works completely offline once installed. It can sync your progress between devices through a private GitHub Gist.
+Interactive metabolism, biochemistry, physiology, cell biology, embryology, anatomy, genetics, pharmacology, immunology, microbiology, histology, physics, chemistry, nutrition and sports drills in **English, French and German**. The app works completely offline once installed. It can sync your progress between devices through a private GitHub Gist.
 
 **Metabolism (11 drill types)**
 - 47 metabolic pathways (glycolysis → sphingolipid degradation)
-- Pathway reconstruction, "what happens next", organ metabolism, hormone response, metabolic switching, enzyme detective, missing molecule, clinical cases plus a disease matcher, and energy (ATP) calculations
+- Pathway reconstruction (four modes: full reactions, enzymes only, molecules only, and **molecules + enzymes** where every molecule and every enzyme is a separate block), with optional **structural formulas** on the blocks – "with names" or "structures only", where names stay hidden until Check
+- "What happens next", organ metabolism, hormone response, metabolic switching, enzyme detective, missing molecule, clinical cases plus a disease matcher, and energy (ATP) calculations
 - 30 clinical cases and 33 inherited metabolic disorders in the disease matcher
 - 10 Pathway diagrams: an overview map of central metabolism with clickable pathways, and every pathway drawn as a real diagram (straight, branched or cycle), coloured by compartment. Study mode (tap a step for a plain-language explanation) or fill the empty molecule/enzyme boxes from a word bank
 - 11 Organ maps: 9 inter-organ diagrams (fed state, overnight fast, starvation, Cori cycle, glucose–alanine cycle, nitrogen/ammonia, lipoproteins, ketone bodies, heme → bilirubin) with gap-fill exercises, plus a tappable body map with 40 "which organs?" questions
@@ -75,6 +76,33 @@ Interactive metabolism, biochemistry, physiology, cell biology, embryology, anat
 - R1 Drug structures & functional groups · R2 Acid–base properties of drugs (% ionised, ion trapping) · R3 Drug solubility & dissolution (Noyes–Whitney, logP, Lipinski, BCS) · R4 Drug stability & degradation (t½, t90, storage)
 - R5 Stereochemistry of drugs · R6 Pharmacokinetics (ADME: F, Vd, CYP, t½, loading and maintenance doses) · R7 Pharmacodynamics (agonists/antagonists, Emax, therapeutic index) · R8 Pharmaceutical calculations & dosage forms
 - R9 Chemistry in medicine & pharmacy: pH, buffers, osmosis, diffusion, equilibrium, oxidation, solubility, stereochemistry and enzymes, each linked to its medical and pharmacy application
+
+**Genetics & molecular biology (4)**
+- G1 DNA replication & repair: order the replication fork, enzymes → jobs, Chargaff calculations, and which repair system (base excision, nucleotide excision, mismatch, double-strand break) fixes which damage, with the diseases and drugs
+- G2 Gene expression: transcribe a fresh template strand into mRNA each time, RNA polymerases and processing, order translation, count amino acids in a reading frame, classify mutations (silent, missense, nonsense, frameshift, in-frame), lac operon and eukaryotic regulation
+- G3 Inheritance & pedigrees: recurrence-risk calculations (AD, AR, X-linked), pedigree patterns, Hardy–Weinberg carrier frequencies, disease → mode of inheritance, penetrance/anticipation/imprinting/mosaicism, karyotypes
+- G4 Molecular lab techniques: PCR copy number and qPCR ΔCt, restriction fragments, Southern/Northern/Western and ELISA, Sanger vs next-generation sequencing, FISH, microarray, CRISPR, and the best first test for a clinical question
+
+**Pharmacology by drug class (4)**
+- F1 Autonomic: receptors (M1–M3, N, α1, α2, β1, β2) and their effects, cholinergic and adrenergic agonists and antagonists, neuromuscular blockers, ↑/↓ prediction for atropine and β blockers, toxidromes and antidotes
+- F2 Cardiovascular & blood: antihypertensives and heart-failure drugs, diuretic electrolyte effects, Vaughan Williams classes, anticoagulants with their monitoring test and reversal, antiplatelets, thrombolysis, lipid-lowering drugs
+- F3 Antimicrobials: antibiotics by target (cell wall, ribosome, DNA/RNA, folate), bactericidal vs bacteriostatic, signature adverse effects, resistance mechanisms (MRSA, VRE, ESBL), antivirals and antifungals
+- F4 CNS, pain & endocrine: analgesics and opioids, antidepressants, antipsychotics, lithium, antiepileptics, serotonin syndrome vs neuroleptic malignant syndrome, diabetes, thyroid, steroid and bone drugs, overdose → antidote
+- Each drug is asked four ways: mechanism, use, typical adverse effect, and drug-from-mechanism
+
+**Immunology & microbiology (4)**
+- I1 Cells & signals: innate vs adaptive, neutrophil recruitment in order, CD markers, cytokines, complement, MHC I vs II comparison table, immunodeficiencies → defect
+- I2 Antibodies, hypersensitivity & vaccines: antibody classes, the four hypersensitivity types with their classic diseases, the steps of a type I reaction, vaccine types (live, inactivated, subunit, conjugate, mRNA), transplant rejection
+- I3 Bacteriology: Gram stain and the two cell-wall types (comparison table), organism ↔ disease both ways, virulence factors, and why wall components and secreted proteins behave differently
+- I4 Viruses, fungi & parasites: DNA vs RNA viruses, naked vs enveloped, the HIV life cycle with its drug targets, virus → disease, hepatitis B serology patterns, opportunists by CD4 count, classic parasites
+
+**Histology (2)**
+- H1 Basic tissues: epithelium ↔ location, gland secretion types (merocrine, apocrine, holocrine), connective-tissue fibres and cells, cartilage types, the three muscle types, neuroglia
+- H2 Organ histology: layers of the gut wall in order, organ cells (parietal, chief, Paneth, Kupffer, Ito, pneumocyte II, podocyte, juxtaglomerular, keratinocyte, Langerhans), nephron segments, lymphoid organs and lung, and the stains (H&E, PAS, trichrome, Ziehl–Neelsen, Congo red, immunohistochemistry)
+
+**Physics for medicine (2)**
+- Y1 Mechanics, fluids & energy: Poiseuille, Laplace, Fick, Bernoulli, Reynolds and Starling applied to the body; vascular resistance, alveolar collapsing pressure, aneurysm wall tension, elbow levers, climbing power, warming infusion fluid
+- Y2 Electricity, waves & radiation: membrane field strength, Nernst equation, ultrasound wavelength and impedance, Doppler, dioptres and lens correction, imaging methods compared, radioactive half-life and the inverse-square law
 
 Most questions are generated with fresh numbers and graphs each time.
 
@@ -180,6 +208,14 @@ Edit the files and push to GitHub. Before you push, change the version string at
 | `kdata.js`, `kdata2.js` | Chemistry drills (K1–K7): element data, electron configurations, formula parser |
 | `rdata.js`, `rdata2.js` | Pharmacy drills (R1–R9) and the medicine/pharmacy concept table |
 | `kids.js`, `kids2.js` | Glossary “In simple words”: beginner explanations (as if for a 10-year-old) for every glossary entry |
+| `pmol.js` | Structures of the pathway molecules for drill 1 (generated by `tools/build_pmol.py` with RDKit – do not edit by hand) |
+| `pw.js` | Drill 1: structure display on the blocks and the "molecules + enzymes" mode |
+| `gdata.js` | Genetics & molecular biology drills (G1–G4) |
+| `fdata.js` | Pharmacology drills (F1–F4) |
+| `idata.js`, `idata2.js` | Immunology & microbiology drills (I1–I4) |
+| `hdata.js` | Histology drills (H1–H2) |
+| `ydata.js` | Physics for medicine drills (Y1–Y2) |
+| `tools/build_pmol.py` | Rebuilds `pmol.js` from SMILES with RDKit; checks every stereocentre's CIP label |
 | `lv.js` | Learning path (units that unlock) and the Progress page |
 | `icon-*.png`, `apple-touch-icon.png`, `favicon.svg` | App icons (normal + maskable for Android) |
 

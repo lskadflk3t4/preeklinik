@@ -1046,3 +1046,15 @@ body.gl-on #gltab{display:none}
 .glkid p{margin:0}
 .glkidbar{display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; margin:6px 0 4px}
 .glkidhint{font-size:.8rem; color:var(--muted)}
+/* ---- pathway structures in blocks (pw.js) ---- */
+.bk-st{display:flex; justify-content:center; align-items:center; padding:2px 0}
+.bk-st .molsvg, .bk-strx .molsvg{display:block; max-width:100%; height:auto}
+.bbk.k-mol:has(.bk-st){flex-direction:column; align-items:center; text-align:center; padding:6px 8px}
+.bbk.k-mol:has(.bk-st) .bbnum{position:absolute; top:4px; left:4px}
+.bbk.k-mol:has(.bk-st) .bbbody{align-items:center}
+.bbk.k-mol .bk-m{font-size:.82rem}
+.bk-strx{display:flex; align-items:center; gap:4px; flex-wrap:wrap}
+.bk-ns{font-size:.7rem; color:var(--muted); font-style:italic}
+.bb-enz .bbk.k-enz{align-self:center}
+details.pwleg{margin:8px 0 0} details.pwleg > summary{cursor:pointer; color:var(--muted); font-size:.85rem}
+@media (max-width:600px){ .controls .seg:has(button:nth-child(4)) button{flex:1 1 40%; border-bottom:1px solid var(--line)} }
