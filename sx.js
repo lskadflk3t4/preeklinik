@@ -33,8 +33,12 @@ const SXS = (t, q, bins, items, x, more) => Object.assign({t, k:'sort', q, bins,
 const SXM = (t, q, pairs, more) => Object.assign({t, k:'lab', q, slots:pairs.map(p => ({l:p[0], a:p[1]}))}, more || {});
 const SXT = (t, q, dg, a, x, more) => Object.assign({t, k:'tap', q, dg, a, x}, more || {});
 /* MCQ generator from a table: rows [name, value]; asks for the value of a random row */
-function sxGenQ(t, rows, qf, more){ return {t, gen(){ const r = pick(rows); const pool = rows.filter(z => TEN(z[1]) !== TEN(r[1])).map(z => z[1]);
-  return mcqFrom(qf(r), r[1], pool, r[2] || null, more); }}; }
+function sxGenQ(t, rows, qf, more){ return {t, tab:{rows, c:[0, 1]}, gen(){ const r = pick(rows); const pool = rows.filter(z => TEN(z[1]) !== TEN(r[1])).map(z => z[1]);
+  return oxRows(mcqFrom(qf(r), r[1], pool, r[2] || null, more), rows, 1, z => q3x(OXFIT, {x:z[0]})); }}; }
+/* per-option explanations for table MCQs: ox[j] says what wrong option j actually is (found by matching column col) */
+const OXFIT = "That fits {x}|Cela correspond à {x}|Das passt zu {x}";
+function oxRows(it, rows, col, show){ try { it.ox = it.o.map((o, j) => { if (!j) return null; const e = TEN(o), hit = rows.filter(r => TEN(r[col]) === e);
+    if (!hit.length) return null; return hit.slice(0, 2).map(show).reduce((a, b) => sxJ(a, ' · ', b)); }); } catch(e){} return it; }
 function sxL(s, i){ const p = String(s).split('|'); return p[i] != null ? p[i] : p[0]; }
 /* join several 'EN|FR|DE' strings language by language: sxJ(a, ' → ', b) */
 function sxJ(){ const a = [].slice.call(arguments); return [0, 1, 2].map(i => a.map(x => sxL(x, i)).join('')).join('|'); }

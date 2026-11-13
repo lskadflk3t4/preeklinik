@@ -16,11 +16,11 @@ if (typeof GRPS !== 'undefined') GRPS.push(['gen', 'grpGen']);
 
 /* ---------- shared helpers for the new subject files ---------- */
 /* MCQ from a table: rows = [[label, value, note?]…]; asks "q" about a random row; distractors from the same column */
-function zTab(t, rows, q, w, more){ return {t, w:w || 3, gen(){ const r = pick(rows);
-  return mcqFrom(q3x(q, {x:r[0]}), r[1], rows.map(z => z[1]), r[2] || null, more); }}; }
+function zTab(t, rows, q, w, more){ return {t, w:w || 3, tab:{rows, c:[0, 1]}, gen(){ const r = pick(rows);
+  return oxRows(mcqFrom(q3x(q, {x:r[0]}), r[1], rows.map(z => z[1]), r[2] || null, more), rows, 1, z => q3x(OXFIT, {x:z[0]})); }}; }
 /* reverse MCQ: give the value, ask for the label */
-function zRev(t, rows, q, w){ return {t, w:w || 2, gen(){ const r = pick(rows);
-  return mcqFrom(q3x(q, {x:r[1]}), r[0], rows.map(z => z[0]), r[2] || null); }}; }
+function zRev(t, rows, q, w){ return {t, w:w || 2, tab:{rows, c:[0, 1]}, gen(){ const r = pick(rows);
+  return oxRows(mcqFrom(q3x(q, {x:r[1]}), r[0], rows.map(z => z[0]), r[2] || null, {rec:true}), rows, 0, z => z[1]); }}; }
 /* calculation item */
 function zNum(q, ans, dp, unit, steps, x, tol){ return {k:'num', q, ans, dp, tol:tol != null ? tol : Math.max(Math.pow(10, -dp)/2 + 1e-9, Math.abs(ans)*0.01), unit, steps, x}; }
 const zf = (v, d) => n3(r2(v, d), d);

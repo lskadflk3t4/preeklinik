@@ -1,6 +1,6 @@
 # Preclinical Drills (offline PWA)
 
-Interactive metabolism, biochemistry, physiology, cell biology, embryology, anatomy, genetics, pharmacology, immunology, microbiology, histology, physics, chemistry, nutrition and sports drills in **English, French and German**. The app works completely offline once installed. It can sync your progress between devices through a private GitHub Gist.
+Interactive metabolism, biochemistry, physiology, cell biology, embryology, anatomy, genetics, pharmacology, immunology, microbiology, histology, physics, biostatistics, clinical labs, chemistry, nutrition and sports drills in **English, French and German**. The app works completely offline once installed. It can sync your progress between devices through a private GitHub Gist.
 
 **Metabolism (11 drill types)**
 - 47 metabolic pathways (glycolysis → sphingolipid degradation)
@@ -51,7 +51,10 @@ Interactive metabolism, biochemistry, physiology, cell biology, embryology, anat
 - A5 Foramina & cranial nerves: tappable skull base (11 openings), contents of a highlighted foramen, cranial nerve functions and lesions
 - A6 Muscle cards: 34 limb muscles by region – build the card (origin, insertion, nerve, action), “nerve cut: which muscles fail?”, which muscle?
 
-**Across subjects (2 drill types)**
+**Across subjects (5 drill types)**
+- X0 Mixed practice: interleaved questions from every unlocked unit of the subjects you tick; ‘Smart’ favours weak units and units due for a re-test, ‘Re-tests only’ works through due re-tests
+- X3 Clinical case chains: 24 patient vignettes answered in four linked steps – diagnosis → mechanism → first-line drug → how it works / what to watch for; the wrong options come from the other cases
+- X4 Experiment & data passages: 12 MCAT-style passages (enzyme inhibition, G-protein signalling, buffers, clearance, cardiac output, local anaesthetics, hormone feedback, pedigrees, antibiotic resistance, thymus-deficient mice, antagonists, a statin trial) with three reasoning questions each
 - X1 Compare: 12 easily confused pairs (tight junction vs desmosome, Wolffian vs Müllerian, radial vs ulnar nerve, epidural vs subdural…) sorted into A, B or both, with a side-by-side table
 - X2 Term trainer: Latin ↔ everyday names and EN ↔ FR ↔ DE translation for the glossary terms
 - Every new drill shows a 🩺 Clinical bridge after the answer that links to a disease or another drill, and every mistake goes to Review (now including the Pathway diagram and Organ map drills)
@@ -104,13 +107,30 @@ Interactive metabolism, biochemistry, physiology, cell biology, embryology, anat
 - Y1 Mechanics, fluids & energy: Poiseuille, Laplace, Fick, Bernoulli, Reynolds and Starling applied to the body; vascular resistance, alveolar collapsing pressure, aneurysm wall tension, elbow levers, climbing power, warming infusion fluid
 - Y2 Electricity, waves & radiation: membrane field strength, Nernst equation, ultrasound wavelength and impedance, Doppler, dioptres and lens correction, imaging methods compared, radioactive half-life and the inverse-square law
 
+**Pharmacology – safety (1)**
+- F5 Drug interactions & safety: CYP inducers vs inhibitors, the classic harmful interactions (both directions), pharmacodynamic combinations (serotonin syndrome, hyperkalaemia, triple whammy, QT), warfarin + rifampicin and ACE inhibitor + NSAID predictions, narrow-therapeutic-index drugs and their monitoring, safer choices in pregnancy, kidney failure and old age
+
+**Biostatistics & epidemiology (3)**
+- T1 Diagnostic tests: 2 × 2 tables with new numbers each time (sensitivity, specificity, PPV, NPV, accuracy, prevalence, LR+ and LR−), PPV from prevalence with natural frequencies, pre-test → post-test probability, prevalence / cut-off / serial-testing predictions, SnNout and SpPin
+- T2 Risk & treatment effects: ARR, RRR, RR and NNT from trial tables, NNH, cohort RR and attributable risk, case–control odds ratio, incidence per person-years, prevalence = incidence × duration, case fatality, attack rate, interpreting RR, OR, CI and hazard ratios
+- T3 Study design, bias & statistics: name the design, trial phases, evidence hierarchy, ten biases and their prevention, choosing the statistical test, type I/II errors and power (↑/↓ predictions), normal distribution, standard error and the 95 % CI
+
+**Clinical labs & data (2)**
+- L1 Blood gas interpretation: internally consistent blood gases (Henderson–Hasselbalch) – primary disorder, appropriate compensation (Winter and the acute/chronic rules), anion gap, albumin correction, delta ratio, high- vs normal-gap causes – and full five-step interpretations of patient cases
+- L2 Lab patterns: liver tests, iron studies and MCV classes, B12 vs folate, thyroid and calcium–PTH patterns, hyponatraemia and prerenal vs ATN work-ups, hyperkalaemia ECG and treatment; corrected calcium, Mentzer index, FENa and serum osmolality
+
 Most questions are generated with fresh numbers and graphs each time.
 
 **Study tools**
 - Glossary side tab (📘 on the right edge, or the **G** key): every concept, enzyme, molecule, pathway and inherited disorder, plus 76 cell biology, embryology and anatomy terms with Latin names, each with a short definition; “On this page” lists the terms on the current screen. Every entry also has a 🧒 **In simple words** box that explains it for beginners, as if to a 10-year-old (switch it on/off with the 🧒 button at the top of the glossary).
+- **Typed recall** (Settings → 🎯 Study features): in ‘Mix’ mode about half of the short-answer questions ask you to type the answer instead of choosing it (spelling slips tolerated, any language accepted, ‘I was right – count it’ for synonyms); ‘Recall first’ types all of them and hides the other questions' options until you have an answer in mind.
+- **Confidence ratings**: tap Sure / Unsure / Guess before answering. Sure-but-wrong answers are flagged 🔥 and go to the front of Review; lucky guesses are saved for review too (🎲); the Progress page shows your calibration.
+- **Why the other options are wrong**: table-based questions explain every wrong option after you answer (what it actually is), and drug questions show the full drug card.
+- **Study cards** (📖): before the first question of a new unit, a one-screen summary built from the unit itself – key tables, sequences, groups, explanations and a worked calculation, plus a key idea and memory hook for the newer drills. Two misses in a row offer the card again.
+- **Mock exam** (⏱ in the sidebar and on the home page): 20–100 questions from the subjects you choose, 75 s per question or no limit, no feedback until you submit; results per subject with every explanation, wrong answers go to Review, history on the Progress page.
 - Building-block chain builder for every ordering task (pathway reconstruction, metabolic timelines, physiology and protein sequences).
 - Built-in manual (EN/FR/DE): every drill and tool explained step by step. Open it from the home page, the **?** button next to each drill title, Settings, the sidebar, or the **M** key.
-- **Learning path**: every drill is split into units from basics to advanced. Unit 1 is open; a unit is mastered (⭐) when 8 of your last 10 answers in it are correct, which unlocks the next unit. Pathway drills (1, 2, 7, and the tests in 10) use four pathway tiers (core energy → fuel switching → lipoproteins/amino acids/heme → nucleotides/steroids/sphingolipids). Settings → Learning path → Free practice opens everything.
+- **Learning path**: every drill is split into units from basics to advanced. Unit 1 is open; a unit is passed (✓) when 8 of your last 10 answers in it are correct, which unlocks the next unit; it then comes back for short spaced re-tests after 1, 3 and 7 days (6 questions, 5 right), and passing all three makes it ⭐ mastered. Pathway drills (1, 2, 7, and the tests in 10) use four pathway tiers (core energy → fuel switching → lipoproteins/amino acids/heme → nucleotides/steroids/sphingolipids). Settings → Learning path → Free practice opens everything.
 - **Progress page** (📈 in the sidebar, the home dashboard or key **P**): answers, accuracy, active days, streak, units mastered, a 30-day activity chart, the spaced-review forecast for the next 14 days, weakest units, and accuracy plus unit status for every drill.
 - Mistakes bank and spaced review: every wrong answer is saved exactly as you saw it and comes back after 1, 3, 7, 14 and 30 days (a wrong answer restarts it). Open it from **Review** in the bottom bar or sidebar. The bank syncs with your scores.
 - Today's goal, day streak, continue / random / weakest drill, sidebar on computers, bottom bar on phones, keyboard shortcuts, text size and theme settings.
@@ -215,6 +235,12 @@ Edit the files and push to GitHub. Before you push, change the version string at
 | `idata.js`, `idata2.js` | Immunology & microbiology drills (I1–I4) |
 | `hdata.js` | Histology drills (H1–H2) |
 | `ydata.js` | Physics for medicine drills (Y1–Y2) |
+| `study.js` | Typed recall, confidence ratings, multi-part case items, per-option explanations and study cards (📖) |
+| `tdata.js` | Biostatistics & epidemiology drills (T1–T3) |
+| `ldata.js` | Clinical labs: blood gas interpretation and lab patterns (L1–L2) |
+| `fdata2.js` | Drug interactions & safety (F5) |
+| `xcase.js` | Clinical case chains (X3) and experiment & data passages (X4) |
+| `plan.js` | Spaced unit re-tests, confidence bookkeeping, mixed practice (X0), mock exam and the extra Progress sections – loaded last |
 | `tools/build_pmol.py` | Rebuilds `pmol.js` from SMILES with RDKit; checks every stereocentre's CIP label |
 | `lv.js` | Learning path (units that unlock) and the Progress page |
 | `icon-*.png`, `apple-touch-icon.png`, `favicon.svg` | App icons (normal + maskable for Android) |

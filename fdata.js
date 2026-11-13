@@ -15,11 +15,15 @@ Object.assign(U, {
 if (typeof GRPS !== 'undefined') GRPS.push(['pha', 'grpPha']);
 
 /* four question types from one drug table: mechanism, use, adverse effect, and drug from mechanism */
-function zDrug(t, rows, w){ w = w || 2; return [
-  {t, w:w + 1, gen(){ const r = pick(rows); return mcqFrom(q3x("How does {d} work?|Comment agit {d} ?|Wie wirkt {d}?", {d:r[0]}), r[1], rows.map(z => z[1]), r[4] || null); }},
-  {t, w, gen(){ const r = pick(rows); return mcqFrom(q3x("Typical use of {d}?|Indication typique de {d} ?|Typischer Einsatz von {d}?", {d:r[0]}), r[2], rows.map(z => z[2]), r[4] || null); }},
-  {t, w:w + 1, gen(){ const r = pick(rows); return mcqFrom(q3x("Which adverse effect or pitfall is typical of {d}?|Quel effet indésirable ou piège est typique de {d} ?|Welche Nebenwirkung oder Falle ist typisch für {d}?", {d:r[0]}), r[3], rows.map(z => z[3]), r[4] || null); }},
-  {t, w, gen(){ const r = pick(rows); return mcqFrom(q3x("Which drug: {m}?|Quel médicament : {m} ?|Welcher Wirkstoff: {m}?", {m:r[1]}), r[0], rows.map(z => z[0]), r[4] || null); }}]; }
+const DRH = ["Drug|Médicament|Wirkstoff", "Mechanism|Mécanisme|Wirkmechanismus", "Main use|Indication principale|Haupteinsatz", "Watch for|Attention|Achtung"];
+const DRX = r => r[4] || q3x("{d}: {m}. Use: {u}. Watch for: {a}.|{d} : {m}. Indication : {u}. Attention : {a}.|{d}: {m}. Einsatz: {u}. Achtung: {a}.", {d:r[0], m:r[1], u:r[2], a:r[3]});
+function zDrug(t, rows, w){ w = w || 2; const tab = {rows, c:[0, 1, 2, 3], h:DRH};
+  const mk = (q, ci, r, show) => oxRows(mcqFrom(q, r[ci], rows.map(z => z[ci]), DRX(r), ci === 0 ? {rec:true} : null), rows, ci, show);
+  return [
+  {t, w:w + 1, tab, gen(){ const r = pick(rows); return mk(q3x("How does {d} work?|Comment agit {d} ?|Wie wirkt {d}?", {d:r[0]}), 1, r, z => q3x("Mechanism of {x}|Mécanisme de {x}|Wirkmechanismus von {x}", {x:z[0]})); }},
+  {t, w, tab, gen(){ const r = pick(rows); return mk(q3x("Typical use of {d}?|Indication typique de {d} ?|Typischer Einsatz von {d}?", {d:r[0]}), 2, r, z => q3x("Use of {x}|Indication de {x}|Einsatz von {x}", {x:z[0]})); }},
+  {t, w:w + 1, tab, gen(){ const r = pick(rows); return mk(q3x("Which adverse effect or pitfall is typical of {d}?|Quel effet indésirable ou piège est typique de {d} ?|Welche Nebenwirkung oder Falle ist typisch für {d}?", {d:r[0]}), 3, r, z => q3x("Typical of {x}|Typique de {x}|Typisch für {x}", {x:z[0]})); }},
+  {t, w, tab, gen(){ const r = pick(rows); return mk(q3x("Which drug: {m}?|Quel médicament : {m} ?|Welcher Wirkstoff: {m}?", {m:r[1]}), 0, r, z => z[1]); }}]; }
 
 /* ===================== F1 autonomic ===================== */
 const F1REC = [
