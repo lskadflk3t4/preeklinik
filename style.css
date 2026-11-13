@@ -1105,3 +1105,9 @@ details.scmore summary{cursor:pointer; color:var(--accent); font-size:.88rem; ma
 .exhist{list-style:none; padding:0; margin:0} .exhist li{display:flex; gap:12px; align-items:center; padding:5px 0; border-bottom:1px solid var(--line)}
 .pgkpis.sm .pgkpi b{font-size:1.3rem}
 @media (max-width:600px){ .conf .confq{width:100%} .conf button{flex:1 1 0} .exbar{top:56px} .mxl{min-width:0; width:100%} }
+/* K8 formulas & Lewis structures */
+.kfx{font-size:1.7rem; font-weight:700; text-align:center; padding:.5rem 0; letter-spacing:.02em}
+.molsvg.lewis .lpd{fill:var(--ink)}
+.opt.figopt.ok .molsvg.lewis .lpd, .opt.figopt.no .molsvg.lewis .lpd{fill:currentColor}
+.after.kxh{margin-top:.6rem; text-align:center}
+.after.kxh .molsvg{max-height:220px; width:auto}
