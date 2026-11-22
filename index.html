@@ -28,8 +28,8 @@
   window.__repair=function(){
     var done=function(){location.reload();};
     var p=[];
-    if('serviceWorker' in navigator) p.push(navigator.serviceWorker.getRegistrations().then(function(r){return Promise.all(r.map(function(x){return x.unregister();}));}));
-    if(window.caches) p.push(caches.keys().then(function(k){return Promise.all(k.map(function(x){return caches.delete(x);}));}));
+    if('serviceWorker' in navigator) p.push(navigator.serviceWorker.getRegistrations().then(function(r){var me=new URL('./',location.href).href;return Promise.all(r.filter(function(x){return x.scope.indexOf(me)===0;}).map(function(x){return x.unregister();}));}));
+    if(window.caches) p.push(caches.keys().then(function(k){return Promise.all(k.filter(function(x){return x.indexOf('md-')===0;}).map(function(x){return caches.delete(x);}));}));
     [].forEach.call(document.querySelectorAll('script[src],link[rel=stylesheet]'),function(el){var u=el.src||el.href;if(u.indexOf(location.origin)===0&&window.fetch)p.push(fetch(u,{cache:'reload'}).catch(function(){}));});
     Promise.all(p).then(done,done);
   };
